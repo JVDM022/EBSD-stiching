@@ -1,0 +1,15 @@
+numpy
+pandas
+scipy
+matplotlib
+scikit-image
+networkx
+scikit-learn
+
+# Optional EBSD packages:
+# orix        # ANG orientation-map reader; also installed with kikuchipy
+# kikuchipy  # EBSD pattern workflows; not the direct ANG reader
+
+# GATv2 graph neural network path:
+torch
+torch-geometric

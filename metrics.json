@@ -1,0 +1,340 @@
+{
+  "best_validation_loss": 0.7127860394807962,
+  "tuned_gated_fusion_config": {
+    "MAX_MISORIENTATION_DEG": 12.5,
+    "MAX_CENTROID_DISTANCE": 35.0,
+    "MIN_CI": 0.05,
+    "MIN_IQ": 0.0,
+    "HEURISTIC_HIGH_CONF": 0.85,
+    "HEURISTIC_LOW_CONF": 0.2,
+    "GAT_HIGH_CONF": 0.85,
+    "GAT_LOW_CONF": 0.2,
+    "MATCH_THRESHOLD": 0.75,
+    "STRONG_DISAGREEMENT": 0.5
+  },
+  "validation_tuning_metrics": {
+    "classification": {
+      "accuracy": 0.9503977538605521,
+      "precision": 1.0,
+      "recall": 0.3116883116883117,
+      "f1": 0.4752475247524752,
+      "roc_auc": 0.6590909090909091,
+      "pr_auc": 0.3673161186029693,
+      "false_match_rate": 0.0,
+      "missed_match_rate": 0.6883116883116883,
+      "TP": 48,
+      "FP": 0,
+      "TN": 1983,
+      "FN": 106
+    },
+    "stitching": {
+      "rmse_stitching_error": 0.30007956024745724,
+      "mean_misorientation_error": 6.128180518734029,
+      "grain_continuity_score": 0.2984624350008965,
+      "broken_connections": 0,
+      "candidates_before_gates": 2137,
+      "hard_gate_rejected": 2088,
+      "accepted_by_fusion": 48,
+      "selected_predicted_matches": 46,
+      "kept_after_ransac": 36
+    }
+  },
+  "methods": {
+    "heuristic_only": {
+      "classification": {
+        "accuracy": 0.9680082559339526,
+        "precision": 0.42857142857142855,
+        "recall": 0.32142857142857145,
+        "f1": 0.3673469387755102,
+        "roc_auc": 0.7868528920601185,
+        "pr_auc": 0.3037205659695678,
+        "false_match_rate": 0.012752391073326248,
+        "missed_match_rate": 0.6785714285714286,
+        "TP": 9,
+        "FP": 12,
+        "TN": 929,
+        "FN": 19
+      },
+      "link_prediction": {
+        "MRR": 0.8133333333333335,
+        "Hits@1": 0.72,
+        "Hits@5": 1.0,
+        "Hits@10": 1.0
+      },
+      "stitching": {
+        "rmse_stitching_error": 0.8635562157614383,
+        "mean_misorientation_error": 0.27294023869371203,
+        "grain_continuity_score": 0.3277777777777778,
+        "broken_connections": 8,
+        "candidates_before_gates": 969,
+        "hard_gate_rejected": 0,
+        "accepted_by_fusion": 21,
+        "selected_predicted_matches": 20,
+        "kept_after_ransac": 15
+      }
+    },
+    "gatv2_only": {
+      "classification": {
+        "accuracy": 0.06914344685242518,
+        "precision": 0.030107526881720432,
+        "recall": 1.0,
+        "f1": 0.05845511482254697,
+        "roc_auc": 0.7917868528920602,
+        "pr_auc": 0.26906688683780056,
+        "false_match_rate": 0.9585547290116897,
+        "missed_match_rate": 0.0,
+        "TP": 28,
+        "FP": 902,
+        "TN": 39,
+        "FN": 0
+      },
+      "link_prediction": {
+        "MRR": 0.8166666666666665,
+        "Hits@1": 0.68,
+        "Hits@5": 1.0,
+        "Hits@10": 1.0
+      },
+      "stitching": {
+        "rmse_stitching_error": 1.236285374340174,
+        "mean_misorientation_error": 0.5021526941579981,
+        "grain_continuity_score": 0.3347222222222222,
+        "broken_connections": 19,
+        "candidates_before_gates": 969,
+        "hard_gate_rejected": 0,
+        "accepted_by_fusion": 930,
+        "selected_predicted_matches": 69,
+        "kept_after_ransac": 28
+      }
+    },
+    "fixed_weighted_average": {
+      "classification": {
+        "accuracy": 0.24045407636738905,
+        "precision": 0.034210526315789476,
+        "recall": 0.9285714285714286,
+        "f1": 0.06598984771573604,
+        "roc_auc": 0.7871565204190072,
+        "pr_auc": 0.3034617672547676,
+        "false_match_rate": 0.7800212539851222,
+        "missed_match_rate": 0.07142857142857142,
+        "TP": 26,
+        "FP": 734,
+        "TN": 207,
+        "FN": 2
+      },
+      "link_prediction": {
+        "MRR": 0.8166666666666665,
+        "Hits@1": 0.72,
+        "Hits@5": 1.0,
+        "Hits@10": 1.0
+      },
+      "stitching": {
+        "rmse_stitching_error": 1.390963615593426,
+        "mean_misorientation_error": 0.5076322533490303,
+        "grain_continuity_score": 0.28472222222222227,
+        "broken_connections": 20,
+        "candidates_before_gates": 969,
+        "hard_gate_rejected": 0,
+        "accepted_by_fusion": 760,
+        "selected_predicted_matches": 69,
+        "kept_after_ransac": 29
+      }
+    },
+    "gated_fusion": {
+      "classification": {
+        "accuracy": 0.7863777089783281,
+        "precision": 0.08755760368663594,
+        "recall": 0.6785714285714286,
+        "f1": 0.15510204081632653,
+        "roc_auc": 0.7596591771671474,
+        "pr_auc": 0.16039393720444692,
+        "false_match_rate": 0.2104144527098831,
+        "missed_match_rate": 0.32142857142857145,
+        "TP": 19,
+        "FP": 198,
+        "TN": 743,
+        "FN": 9
+      },
+      "link_prediction": {
+        "MRR": 0.8246666666666667,
+        "Hits@1": 0.72,
+        "Hits@5": 1.0,
+        "Hits@10": 1.0
+      },
+      "stitching": {
+        "rmse_stitching_error": 1.1717011017485723,
+        "mean_misorientation_error": 1.3091055237432008,
+        "grain_continuity_score": 0.15416666666666667,
+        "broken_connections": 20,
+        "candidates_before_gates": 969,
+        "hard_gate_rejected": 752,
+        "accepted_by_fusion": 217,
+        "selected_predicted_matches": 55,
+        "kept_after_ransac": 25
+      }
+    }
+  },
+  "classification": {
+    "accuracy": 0.7863777089783281,
+    "precision": 0.08755760368663594,
+    "recall": 0.6785714285714286,
+    "f1": 0.15510204081632653,
+    "roc_auc": 0.7596591771671474,
+    "pr_auc": 0.16039393720444692,
+    "false_match_rate": 0.2104144527098831,
+    "missed_match_rate": 0.32142857142857145,
+    "TP": 19,
+    "FP": 198,
+    "TN": 743,
+    "FN": 9
+  },
+  "link_prediction": {
+    "MRR": 0.8246666666666667,
+    "Hits@1": 0.72,
+    "Hits@5": 1.0,
+    "Hits@10": 1.0
+  },
+  "calibration": {
+    "ECE": 0.2118345984212641
+  },
+  "stitching": {
+    "rmse_stitching_error": 1.1717011017485723,
+    "mean_misorientation_error": 1.3091055237432008,
+    "grain_continuity_score": 0.15416666666666667,
+    "broken_connections": 20,
+    "candidates_before_gates": 969,
+    "hard_gate_rejected": 752,
+    "accepted_by_fusion": 217,
+    "selected_predicted_matches": 55,
+    "kept_after_ransac": 25
+  },
+  "per_category": {
+    "degree": {
+      "large_degree": {
+        "accuracy": 0.8436578171091446,
+        "precision": 0.09259259259259259,
+        "recall": 0.5555555555555556,
+        "f1": 0.15873015873015872,
+        "roc_auc": 0.7383838383838385,
+        "pr_auc": 0.30426750837994987,
+        "false_match_rate": 0.1484848484848485,
+        "missed_match_rate": 0.4444444444444444,
+        "TP": 5,
+        "FP": 49,
+        "TN": 281,
+        "FN": 4
+      },
+      "small_degree": {
+        "accuracy": 0.7555555555555555,
+        "precision": 0.08588957055214724,
+        "recall": 0.7368421052631579,
+        "f1": 0.15384615384615385,
+        "roc_auc": 0.7638039452149195,
+        "pr_auc": 0.13042767080726947,
+        "false_match_rate": 0.24386252045826515,
+        "missed_match_rate": 0.2631578947368421,
+        "TP": 14,
+        "FP": 149,
+        "TN": 462,
+        "FN": 5
+      }
+    },
+    "CI": {
+      "low_CI": {
+        "accuracy": 0.8,
+        "precision": 0.07142857142857142,
+        "recall": 0.5,
+        "f1": 0.125,
+        "roc_auc": 0.6213235294117647,
+        "pr_auc": 0.05595238095238095,
+        "false_match_rate": 0.19117647058823528,
+        "missed_match_rate": 0.5,
+        "TP": 1,
+        "FP": 13,
+        "TN": 55,
+        "FN": 1
+      },
+      "mid_CI": {
+        "accuracy": 0.7853170189098999,
+        "precision": 0.08866995073891626,
+        "recall": 0.6923076923076923,
+        "f1": 0.1572052401746725,
+        "roc_auc": 0.7711692660146268,
+        "pr_auc": 0.17156829110053165,
+        "false_match_rate": 0.21191294387170675,
+        "missed_match_rate": 0.3076923076923077,
+        "TP": 18,
+        "FP": 185,
+        "TN": 688,
+        "FN": 8
+      },
+      "high_CI": {}
+    },
+    "misorientation_difficulty": {
+      "easy_<2deg": {
+        "accuracy": 0.8048128342245989,
+        "precision": 0.20238095238095238,
+        "recall": 0.7391304347826086,
+        "f1": 0.3177570093457944,
+        "roc_auc": 0.7814938684503902,
+        "pr_auc": 0.20978768980262014,
+        "false_match_rate": 0.1908831908831909,
+        "missed_match_rate": 0.2608695652173913,
+        "TP": 17,
+        "FP": 67,
+        "TN": 284,
+        "FN": 6
+      },
+      "moderate_2_5deg": {
+        "accuracy": 0.7755102040816326,
+        "precision": 0.01834862385321101,
+        "recall": 0.4,
+        "f1": 0.03508771929824561,
+        "roc_auc": 0.5505154639175258,
+        "pr_auc": 0.011888008353398632,
+        "false_match_rate": 0.22061855670103092,
+        "missed_match_rate": 0.6,
+        "TP": 2,
+        "FP": 107,
+        "TN": 378,
+        "FN": 3
+      },
+      "hard_5_15deg": {
+        "accuracy": 0.7391304347826086,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "roc_auc": null,
+        "pr_auc": null,
+        "false_match_rate": 0.2608695652173913,
+        "missed_match_rate": 0.0,
+        "TP": 0,
+        "FP": 24,
+        "TN": 68,
+        "FN": 0
+      },
+      "very_hard_>15deg": {
+        "accuracy": 1.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "roc_auc": null,
+        "pr_auc": null,
+        "false_match_rate": 0.0,
+        "missed_match_rate": 0.0,
+        "TP": 0,
+        "FP": 0,
+        "TN": 13,
+        "FN": 0
+      }
+    }
+  },
+  "split_sizes": {
+    "train_pairs": 52,
+    "validation_pairs": 13,
+    "final_test_pairs_file2": 6,
+    "train_links": 8486,
+    "validation_links": 2137,
+    "final_test_links_file2": 969
+  },
+  "note": "PR-AUC is emphasized because EBSD link prediction is usually class-imbalanced. Gated thresholds were tuned on validation data only."
+}
