@@ -44,7 +44,21 @@ DISTORT_EVERY_OTHER_TILE = True
 SAVE_UNDISTORTED_TILES = True
 RANDOM_SEED = 42
 
-# Artificial distortion settings
+# Artificial distortion settings.
+#
+# Kikuchipy's detector PC fitting uses projective transforms for map grids
+# whose parallel lines may become non-parallel.  Use the same transform family
+# here to synthesize a rectangle-to-trapezoid coordinate distortion.
+DISTORTION_MODEL = "projective_trapezoid"  # "projective_trapezoid" or "affine_drift"
+TRAPEZOID_TOP_WIDTH_SCALE = 0.92
+TRAPEZOID_BOTTOM_WIDTH_SCALE = 1.08
+TRAPEZOID_TOP_SHIFT_X = 4.0
+TRAPEZOID_BOTTOM_SHIFT_X = -4.0
+TRAPEZOID_TOP_SHIFT_Y = 0.0
+TRAPEZOID_BOTTOM_SHIFT_Y = 0.0
+
+# Legacy affine/drift distortion settings, used when DISTORTION_MODEL is
+# "affine_drift".
 TRANSLATION_X = 5.0
 TRANSLATION_Y = -3.0
 ROTATION_DEG = 1.5
@@ -69,6 +83,13 @@ MANIFEST_FIELDS = [
     "n_points",
     "tilt_corrected",
     "distorted",
+    "distortion_model",
+    "trapezoid_top_width_scale",
+    "trapezoid_bottom_width_scale",
+    "trapezoid_top_shift_x",
+    "trapezoid_bottom_shift_x",
+    "trapezoid_top_shift_y",
+    "trapezoid_bottom_shift_y",
     "translation_x",
     "translation_y",
     "rotation_deg",
@@ -279,15 +300,29 @@ def distort_coordinates(
     data: np.ndarray,
     x_col: int,
     y_col: int,
-    params: Dict[str, float | bool],
+    params: Dict[str, float | bool | str],
 ) -> np.ndarray:
     """
     Apply a small synthetic coordinate distortion to one tile.
 
-    Coordinates are centered at the tile centroid before affine and rotation
-    transforms. The centroid is added back afterward, so the distortion changes
-    the local geometry without moving the tile origin definition.
+    The default model is a projective rectangle-to-trapezoid warp. This is the
+    inverse of the usual trapezoid correction: correction maps a measured
+    trapezoid back to a rectangle, while this function maps the clean rectangle
+    into a measured trapezoid. The legacy affine/drift model remains available
+    for older experiments.
     """
+    if params.get("distortion_model") == "projective_trapezoid":
+        return _distort_coordinates_projective_trapezoid(data, x_col, y_col, params)
+    return _distort_coordinates_affine_drift(data, x_col, y_col, params)
+
+
+def _distort_coordinates_affine_drift(
+    data: np.ndarray,
+    x_col: int,
+    y_col: int,
+    params: Dict[str, float | bool | str],
+) -> np.ndarray:
+    """Apply the previous centered affine plus sinusoidal drift model."""
     distorted = data.copy()
     x = distorted[:, x_col].copy()
     y = distorted[:, y_col].copy()
@@ -336,13 +371,153 @@ def distort_coordinates(
     return distorted
 
 
+def _homography_from_points(src: np.ndarray, dst: np.ndarray) -> np.ndarray:
+    """Return 3x3 projective transform H with dst ~= H @ src."""
+    if src.shape != (4, 2) or dst.shape != (4, 2):
+        raise ValueError("Projective trapezoid distortion requires four 2D corners")
+
+    try:
+        from kikuchipy.detectors._fit_projection_center import (
+            get_projective_transform_matrix,
+        )
+    except Exception:
+        get_projective_transform_matrix = None
+
+    if get_projective_transform_matrix is not None:
+        # Kikuchipy returns the matrix transposed for row-vector dot products.
+        # This script applies homographies in the conventional column-vector
+        # form, so transpose it back here.
+        return get_projective_transform_matrix(src, dst).T
+
+    rows = []
+    rhs = []
+    for (x, y), (u, v) in zip(src, dst):
+        rows.append([x, y, 1.0, 0.0, 0.0, 0.0, -u * x, -u * y])
+        rhs.append(u)
+        rows.append([0.0, 0.0, 0.0, x, y, 1.0, -v * x, -v * y])
+        rhs.append(v)
+
+    h = np.linalg.solve(np.asarray(rows, dtype=float), np.asarray(rhs, dtype=float))
+    return np.array(
+        [
+            [h[0], h[1], h[2]],
+            [h[3], h[4], h[5]],
+            [h[6], h[7], 1.0],
+        ],
+        dtype=float,
+    )
+
+
+def _apply_homography(x: np.ndarray, y: np.ndarray, matrix: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    denom = matrix[2, 0] * x + matrix[2, 1] * y + matrix[2, 2]
+    if np.any(np.isclose(denom, 0.0)):
+        raise ValueError("Projective trapezoid transform produced points at infinity")
+    x_new = (matrix[0, 0] * x + matrix[0, 1] * y + matrix[0, 2]) / denom
+    y_new = (matrix[1, 0] * x + matrix[1, 1] * y + matrix[1, 2]) / denom
+    return x_new, y_new
+
+
+def _scaled_edge_corners(
+    xmin: float,
+    xmax: float,
+    y: float,
+    width_scale: float,
+    shift_x: float,
+    shift_y: float,
+) -> Tuple[Tuple[float, float], Tuple[float, float]]:
+    center = 0.5 * (xmin + xmax)
+    half_width = 0.5 * (xmax - xmin) * width_scale
+    return (
+        (center - half_width + shift_x, y + shift_y),
+        (center + half_width + shift_x, y + shift_y),
+    )
+
+
+def _distort_coordinates_projective_trapezoid(
+    data: np.ndarray,
+    x_col: int,
+    y_col: int,
+    params: Dict[str, float | bool | str],
+) -> np.ndarray:
+    """Map a clean rectangular tile into a projective trapezoid."""
+    distorted = data.copy()
+    x = distorted[:, x_col].copy()
+    y = distorted[:, y_col].copy()
+
+    xmin = float(params["xmin"])
+    xmax = float(params["xmax"])
+    ymin = float(params["ymin"])
+    ymax = float(params["ymax"])
+    top_scale = float(params["trapezoid_top_width_scale"])
+    bottom_scale = float(params["trapezoid_bottom_width_scale"])
+
+    if top_scale <= 0.0 or bottom_scale <= 0.0:
+        raise ValueError("Trapezoid width scales must be positive")
+
+    bottom_left, bottom_right = _scaled_edge_corners(
+        xmin,
+        xmax,
+        ymin,
+        bottom_scale,
+        float(params["trapezoid_bottom_shift_x"]),
+        float(params["trapezoid_bottom_shift_y"]),
+    )
+    top_left, top_right = _scaled_edge_corners(
+        xmin,
+        xmax,
+        ymax,
+        top_scale,
+        float(params["trapezoid_top_shift_x"]),
+        float(params["trapezoid_top_shift_y"]),
+    )
+
+    src = np.array(
+        [
+            [xmin, ymin],
+            [xmax, ymin],
+            [xmax, ymax],
+            [xmin, ymax],
+        ],
+        dtype=float,
+    )
+    dst = np.array(
+        [
+            bottom_left,
+            bottom_right,
+            top_right,
+            top_left,
+        ],
+        dtype=float,
+    )
+    matrix = _homography_from_points(src, dst)
+    x_new, y_new = _apply_homography(x, y, matrix)
+
+    if bool(params["add_nonlinear_drift"]):
+        width = max(xmax - xmin, np.finfo(float).eps)
+        height = max(ymax - ymin, np.finfo(float).eps)
+        amplitude = float(params["drift_amplitude"])
+        x_new += amplitude * np.sin(2.0 * np.pi * (y - ymin) / height)
+        y_new += 0.5 * amplitude * np.sin(2.0 * np.pi * (x - xmin) / width)
+
+    distorted[:, x_col] = x_new
+    distorted[:, y_col] = y_new
+    return distorted
+
+
 def _distortion_params(
     xmin: float,
     xmax: float,
     ymin: float,
     ymax: float,
-) -> Dict[str, float | bool]:
+) -> Dict[str, float | bool | str]:
     return {
+        "distortion_model": DISTORTION_MODEL,
+        "trapezoid_top_width_scale": TRAPEZOID_TOP_WIDTH_SCALE,
+        "trapezoid_bottom_width_scale": TRAPEZOID_BOTTOM_WIDTH_SCALE,
+        "trapezoid_top_shift_x": TRAPEZOID_TOP_SHIFT_X,
+        "trapezoid_bottom_shift_x": TRAPEZOID_BOTTOM_SHIFT_X,
+        "trapezoid_top_shift_y": TRAPEZOID_TOP_SHIFT_Y,
+        "trapezoid_bottom_shift_y": TRAPEZOID_BOTTOM_SHIFT_Y,
         "translation_x": TRANSLATION_X,
         "translation_y": TRANSLATION_Y,
         "rotation_deg": ROTATION_DEG,
@@ -382,6 +557,13 @@ def _manifest_row(
         "n_points": n_points,
         "tilt_corrected": tilt_corrected,
         "distorted": distorted,
+        "distortion_model": DISTORTION_MODEL if distorted else "none",
+        "trapezoid_top_width_scale": TRAPEZOID_TOP_WIDTH_SCALE if distorted else 1.0,
+        "trapezoid_bottom_width_scale": TRAPEZOID_BOTTOM_WIDTH_SCALE if distorted else 1.0,
+        "trapezoid_top_shift_x": TRAPEZOID_TOP_SHIFT_X if distorted else 0.0,
+        "trapezoid_bottom_shift_x": TRAPEZOID_BOTTOM_SHIFT_X if distorted else 0.0,
+        "trapezoid_top_shift_y": TRAPEZOID_TOP_SHIFT_Y if distorted else 0.0,
+        "trapezoid_bottom_shift_y": TRAPEZOID_BOTTOM_SHIFT_Y if distorted else 0.0,
         "translation_x": TRANSLATION_X if distorted else 0.0,
         "translation_y": TRANSLATION_Y if distorted else 0.0,
         "rotation_deg": ROTATION_DEG if distorted else 0.0,
@@ -606,6 +788,12 @@ def _validate_config(data: np.ndarray) -> None:
         raise ValueError("OVERLAP_FRACTION must be between 0 and 0.9")
     if TILE_WIDTH <= 0 or TILE_HEIGHT <= 0:
         raise ValueError("TILE_WIDTH and TILE_HEIGHT must be greater than 0")
+    if DISTORTION_MODEL not in {"projective_trapezoid", "affine_drift"}:
+        raise ValueError(
+            "DISTORTION_MODEL must be 'projective_trapezoid' or 'affine_drift'"
+        )
+    if TRAPEZOID_TOP_WIDTH_SCALE <= 0 or TRAPEZOID_BOTTOM_WIDTH_SCALE <= 0:
+        raise ValueError("Trapezoid width scales must be greater than 0")
     if X_COL < 0 or Y_COL < 0:
         raise ValueError("X_COL and Y_COL must be zero-based, non-negative indexes")
     if data.shape[1] <= max(X_COL, Y_COL):
