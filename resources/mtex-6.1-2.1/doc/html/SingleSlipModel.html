@@ -1,0 +1,426 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Sigle Slip Model</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-09-12">
+<meta name="DC.source" content="script_SingleSlipModel.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Sigle Slip Model</h1>
+<!--introduction-->
+<p>Details to this model can be found in</p>
+<div>
+<ul>
+<li>
+<a href="https://doi.org/10.1093/gji/ggy442">An analytical finite-strain parametrization for texture evolution in deforming olivine polycrystals</a>, Geoph. J. Intern. 216, 2019.</li>
+</ul>
+</div>
+<!--/introduction-->
+<h2 id="1">The Continuity Equation</h2>
+<p>The evolution of the orientation distribution function (ODF) <img src="SingleSlipModel_eq02242846391235252725.png" alt="$f(g)$"> with respect to a crystallographic spin <img src="SingleSlipModel_eq01239219828966086421.png" alt="$\Omega(g)$"> is governed by the continuity equation</p>
+<p>$$\frac{\partial}{\partial t} f + \nabla f \cdot \Omega + f \text{ div } \Omega = 0$$</p>
+<pre class="error">Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax: 
+$$\frac{\partial}{\partial t} f + \nabla f \cdot \Omega + f \text{ div } \Omega = 0$$
+</pre>
+<p>The solution of this equation depends on the initial texture <img src="SingleSlipModel_eq01571725111373737390.png" alt="$f_0(g)$"> at time zero and the crystallographic spin <img src="SingleSlipModel_eq01239219828966086421.png" alt="$\Omega(g)$">. In this model we assume the initial texture to be isotropic, i.e., <img src="SingleSlipModel_eq13457213076871033477.png" alt="$f_0 = 1$"> and the crystallographic spin be associated with a single slip system. The full ODF will be later modeled as a superposition of the single slip models.</p>
+<p>In this example we consider Olivine with has orthorhombic symmetry</p>
+<pre class="codeinput">csOli=crystalSymmetry(<span class="string">'222'</span>,[4.77910.2775.995],<span class="string">'mineral'</span>,<span class="string">'olivine'</span>);csOrtho=crystalSymmetry(<span class="string">'222'</span>,[18.384,8.878,5.226],<span class="string">'mineral'</span>,<span class="string">'orthopyroxene'</span>);
+</pre>
+<p>and the basic slip systems in olivine and orthopyroxene</p>
+<pre class="codeinput">sSOli=slipSystem(Miller({1,0,0},{1,0,0},{0,0,1},csOli,<span class="string">'uvw'</span>),<span class="keyword">...</span>Miller({0,1,0},{0,0,1},{0,1,0},csOli,<span class="string">'hkl'</span>))sSOrtho=slipSystem(Miller({0,0,1},csOrtho,<span class="string">'uvw'</span>),<span class="keyword">...</span>Miller({1,0,0},csOrtho,<span class="string">'hkl'</span>))
+</pre>
+<pre class="codeoutput"> 
+sSOli = slipSystem (olivine)
+ size: 1 x 3
+ 
+  u    v    w  | h    k    l CRSS
+  1    0    0    0    1    0    1
+  1    0    0    0    0    1    1
+  0    0    1    0    1    0    1
+ 
+sSOrtho = slipSystem (orthopyroxene)
+ 
+  u    v    w  | h    k    l CRSS
+  0    0    1    1    0    0    1
+</pre>
+<p>To each of the slip systems we can associate an orientation dependent Schmid or deformation tensor <img src="SingleSlipModel_eq06160054527454302888.png" alt="$S(g)$"></p>
+<pre class="codeinput">S=sSOli.deformationTensor
+</pre>
+<pre class="codeoutput"> 
+S = tensor (olivine)
+  size: 1 x 3    
+  rank: 2 (3 x 3)
+</pre>
+<p>and make for the orientation dependent strain rate tensor <img src="SingleSlipModel_eq14134076257535684348.png" alt="$e(g)$"> the ansatz <img src="SingleSlipModel_eq09966382109042907503.png" alt="$e_{ij}(g) = \gamma(g) S_{ij}(g)$">. Fitting this ansatz to a given a macroscopic strain tensor</p>
+<pre class="codeinput">E=0.3*strainRateTensor([100;000;00-1])
+</pre>
+<pre class="codeoutput"> 
+E = strainRateTensor (xyz)
+  rank: 2 (3 x 3)
+ 
+ *10^-2
+  30   0   0
+   0   0   0
+   0   0 -30
+</pre>
+<p>via minimizing the square difference</p>
+<p>$$\int_{SO(3)} \sum_{i,j} (e_{i,j}(g) - E_{i,j})^2 dg \to \text{min}$$</p>
+<pre class="error">Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax: 
+$$\int_{SO(3)} \sum_{i,j} (e_{i,j}(g) - E_{i,j})^2 dg \to \text{min}$$
+</pre>
+<p>the orientation dependent strain rate tensor is identified as</p>
+<p>
+<img src="SingleSlipModel_eq15171368673803489569.png" alt="$$e(g) = 2 \left< S(g), E \right> S(g)$$"></p>
+<p>and the corresponding crystallographic spin tensor as</p>
+<p>
+<img src="SingleSlipModel_eq01791600300036883684.png" alt="$$\Omega_i(g) = \epsilon_{ijk} e_{jk}(g)$$"></p>
+<p>This can be modeled in MTEX via</p>
+<pre class="codeinput">
+<span class="comment">% this is in crystal coordinates</span><span class="comment">% Omega = @(ori) SO3TangentVector(spinTensor(((ori * S(2)) : E) .* S(2)));</span><span class="comment">% Omega = @(ori) 0.5 * EinsteinSum(tensor.leviCivita,[1 -1 -2],(ori * S(1) : E) .* (S(2)),[-1 -2])</span><span class="comment">% this is in specimen coordinates</span>Omega=@(ori)-SO3TangentVector(spinTensor(((ori*S(2)):E).*(ori*S(2))));<span class="comment">% turn in into a harmonic function</span>Omega=SO3VectorFieldHarmonic.quadrature(Omega,csOli)
+</pre>
+<pre class="codeoutput"> 
+Omega = SO3VectorFieldHarmonic (olivine &rarr; xyz)
+  bandwidth: 3
+  tangent space: leftVector
+ 
+</pre>
+<pre class="codeinput">
+<span class="comment">% We may visualize the orientation dependence of the spin tensor by plotting</span><span class="comment">% its divergence in sigma sections and on top of it the spin tensors as a</span><span class="comment">% quiver plot</span>plotSection(div(Omega),<span class="string">'sigma'</span>,<span class="string">'noGrid'</span>)mtexColorMap<span class="string">blue2red</span>mtexColorbarhold<span class="string">on</span>plot(Omega,<span class="string">'add2all'</span>,<span class="string">'linewidth'</span>,1,<span class="string">'color'</span>,<span class="string">'k'</span>)hold<span class="string">off</span>
+</pre>
+<img vspace="50" hspace="5" src="SingleSlipModel_01.png" alt=""> <p>The divergence plots can be read as follows. Negative (blue) regions indicate orientations that increase in volume, whereas positive regions indicate orientations that decrease in volume. Accordingly, we expect the texture to become more and more concentrated within the blue regions. In the example example illustrated above with only the second slip system being active, we would expect the c-axis to align more and more with the the z-direction.</p>
+<h2 id="9">Solutions of the Continuity Equation</h2>
+<p>The solutions of the continuity equation can be analytically computed and are available via the command <a href="SO3FunSBF.SO3FunSBF.html"><tt>SO3FunSBF</tt></a>. This command takes as input the specific slips system <tt>sS</tt> and the macroscopic strain tensor <tt>E</tt>
+</p>
+<pre class="codeinput">odf1=SO3FunSBF(sSOli(1),E)odf2=SO3FunSBF(sSOli(2),E)odf3=SO3FunSBF(sSOli(3),E)odf4=SO3FunSBF(sSOrtho,E)
+</pre>
+<pre class="codeoutput"> 
+odf1 = SO3FunSBF (olivine &rarr; xyz)
+ 
+    slip system: (010)[100]
+    strain:      0.3 0 -0.3
+ 
+odf2 = SO3FunSBF (olivine &rarr; xyz)
+ 
+    slip system: (001)[100]
+    strain:      0.3 0 -0.3
+ 
+odf3 = SO3FunSBF (olivine &rarr; xyz)
+ 
+    slip system: (010)[001]
+    strain:      0.3 0 -0.3
+ 
+odf4 = SO3FunSBF (orthopyroxene &rarr; xyz)
+ 
+    slip system: (100)[001]
+    strain:      0.3 0 -0.3
+</pre>
+<p>Lets check our expectation from the last paragraph by visualizing the odf corresponding to the second slip system in sigma sections</p>
+<pre class="codeinput">figure(1)plotSection(odf2,<span class="string">'sigma'</span>)mtexColorbar
+</pre>
+<img vspace="50" hspace="5" src="SingleSlipModel_02.png" alt=""> <p>We observe exactly the concentration of the c-axis around z as predicted by the model. This can be seen even more clear when looking a the pole figures</p>
+<pre class="codeinput">h=Miller({1,0,0},{0,1,0},{0,0,1},csOli);plotPDF(odf2,h,<span class="string">'resolution'</span>,2*degree,<span class="string">'colorRange'</span>,<span class="string">'equal'</span>)mtexColorbar
+</pre>
+<img vspace="50" hspace="5" src="SingleSlipModel_03.png" alt=""> <p>We could also have computed the solution of the continuity equation numerically. To this end we utilize the command <a href="doEulerStep.html"><tt>doEulerStep</tt></a> which takes as input the crystallographic spin tensor <tt>Omega</tt>, the initial odf <tt>odf0</tt> and the number of iterations to be performed.</p>
+<pre class="codeinput">
+<span class="comment">% the starting ODF</span>odf0=uniformODF(csOli);<span class="comment">% the transformed ODF</span>odf=doEulerStep(2*Omega,odf0,40)figure(2)plot(odf,<span class="string">'sigma'</span>)mtexColorbar
+</pre>
+<pre class="codeoutput"> 
+odf = SO3FunHarmonic (olivine &rarr; xyz)
+  bandwidth: 28
+  weight: 1
+ 
+</pre>
+<img vspace="50" hspace="5" src="SingleSlipModel_04.png" alt=""> <p>Indeed the error between the numerical solution and the theoretical solution is neglectable small. We may quantify the difference by</p>
+<pre class="codeinput">mean(abs(odf-odf2))
+</pre>
+<pre class="codeoutput">ans =
+    0.0011
+</pre>
+<p>For completeness the pole figures of the other two basis functions.</p>
+<pre class="codeinput">plotPDF(odf1,h,<span class="string">'resolution'</span>,2*degree,<span class="string">'colorRange'</span>,<span class="string">'equal'</span>)mtexColorbar
+</pre>
+<img vspace="50" hspace="5" src="SingleSlipModel_05.png" alt=""> <pre class="codeinput">plotPDF(odf3,h,<span class="string">'resolution'</span>,2*degree,<span class="string">'colorRange'</span>,<span class="string">'equal'</span>)mtexColorbar
+</pre>
+<img vspace="50" hspace="5" src="SingleSlipModel_06.png" alt=""> <p>We observe that the pole figure with respect to <img src="SingleSlipModel_eq14356167677399844697.png" alt="$n \times b$"> is always uniform, where <img src="SingleSlipModel_eq17555110721583917243.png" alt="$n$"> is the slip normal and <img src="SingleSlipModel_eq03210107377657008384.png" alt="$b$"> is the slip direction.</p>
+<p>Since in practice all three slip systems are active we can model the resulting ODF as a linear combination of the different basis functions</p>
+<pre class="codeinput">plotPDF(odf1+odf2+odf3,h,<span class="string">'resolution'</span>,2*degree,<span class="string">'colorRange'</span>,<span class="string">'equal'</span>)mtexColorbar
+</pre>
+<img vspace="50" hspace="5" src="SingleSlipModel_07.png" alt=""> <h2 id="18">Checking the for steady state</h2>
+<p>We may also check for which orientations an ODF is already in a steady state of the continuity equation, i.e., the time derivative $\text{div}(f \Omega) = 0$ is zero.</p>
+<pre class="error">Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax: 
+$\text{div}(f \Omega) = 0$
+</pre>
+<pre class="codeinput">plotSection(div(odf2.*Omega),<span class="string">'sigma'</span>)mtexColorMap<span class="string">blue2red</span>mtexColorbarsetColorRange(max(abs(clim))*[-1,1])
+</pre>
+<img vspace="50" hspace="5" src="SingleSlipModel_08.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Sigle Slip Model
+%
+% Details to this model can be found in
+%
+% * <https://doi.org/10.1093/gji/ggy442 An analytical finite-strain
+% parametrization for texture evolution in deforming olivine polycrystals>,
+% Geoph. J. Intern. 216, 2019.
+%
+%% The Continuity Equation
+%
+% The evolution of the orientation distribution function (ODF) $f(g)$ with
+% respect to a crystallographic spin $\Omega(g)$ is governed by the
+% continuity equation
+% 
+% $$\frac{\partial}{\partial t} f + \nabla f \cdot \Omega + f \text{ div } \Omega = 0$$
+% 
+% The solution of this equation depends on the initial texture $f_0(g)$ at
+% time zero and the crystallographic spin $\Omega(g)$. In this model we
+% assume the initial texture to be isotropic, i.e., $f_0 = 1$ and the
+% crystallographic spin be associated with a single slip system. The full
+% ODF will be later modeled as a superposition of the single slip models.
+%
+%% 
+% In this example we consider Olivine with has orthorhombic symmetry
+
+csOli = crystalSymmetry('222',[4.779 10.277 5.995],'mineral','olivine');
+csOrtho = crystalSymmetry('222',[18.384, 8.878, 5.226],'mineral','orthopyroxene');
+
+%%
+% and the basic slip systems in olivine and orthopyroxene
+
+sSOli = slipSystem(Miller({1,0,0},{1,0,0},{0,0,1},csOli,'uvw'),...
+  Miller({0,1,0},{0,0,1},{0,1,0},csOli,'hkl'))
+
+sSOrtho = slipSystem(Miller({0,0,1},csOrtho,'uvw'),...
+  Miller({1,0,0},csOrtho,'hkl'))
+
+%%
+% To each of the slip systems we can associate an orientation dependent
+% Schmid or deformation tensor $S(g)$
+
+S = sSOli.deformationTensor
+
+%%
+% and make for the orientation dependent strain rate tensor $e(g)$ the
+% ansatz $e_{ij}(g) = \gamma(g) S_{ij}(g)$. Fitting this ansatz to a given
+% a macroscopic strain tensor
+
+E = 0.3 * strainRateTensor([1 0 0; 0 0 0; 0 0 -1])
+
+%%
+% via minimizing the square difference
+% 
+% $$\int_{SO(3)} \sum_{i,j} (e_{i,j}(g) - E_{i,j})^2 dg \to \text{min}$$
+% 
+% the orientation dependent strain rate tensor is identified as
+%
+% $$e(g) = 2 \left< S(g), E \right> S(g)$$
+%
+% and the corresponding crystallographic spin tensor as
+%
+% $$\Omega_i(g) = \epsilon_{ijk} e_{jk}(g)$$
+%
+% This can be modeled in MTEX via
+
+% this is in crystal coordinates
+% Omega = @(ori) SO3TangentVector(spinTensor(((ori * S(2)) : E) .* S(2)));
+% Omega = @(ori) 0.5 * EinsteinSum(tensor.leviCivita,[1 -1 -2],(ori * S(1) : E) .* (S(2)),[-1 -2])
+
+% this is in specimen coordinates
+Omega = @(ori) -SO3TangentVector(spinTensor(((ori * S(2)) : E) .* (ori * S(2))));
+
+% turn in into a harmonic function
+Omega = SO3VectorFieldHarmonic.quadrature(Omega,csOli)
+
+%%
+
+% We may visualize the orientation dependence of the spin tensor by plotting
+% its divergence in sigma sections and on top of it the spin tensors as a
+% quiver plot
+
+plotSection(div(Omega),'sigma','noGrid')
+mtexColorMap blue2red
+mtexColorbar
+
+hold on
+plot(Omega,'add2all','linewidth',1,'color','k')
+hold off
+
+%% 
+% The divergence plots can be read as follows. Negative (blue) regions
+% indicate orientations that increase in volume, whereas positive regions
+% indicate orientations that decrease in volume. Accordingly, we expect the
+% texture to become more and more concentrated within the blue regions. In
+% the example example illustrated above with only the second slip system
+% being active, we would expect the c-axis to align more and more with the
+% the z-direction. 
+%
+
+%% Solutions of the Continuity Equation
+% The solutions of the continuity equation can be analytically computed and
+% are available via the command <SO3FunSBF.SO3FunSBF.html |SO3FunSBF|>.
+% This command takes as input the specific slips system |sS| and the
+% macroscopic strain tensor |E|
+
+odf1 = SO3FunSBF(sSOli(1),E)
+odf2 = SO3FunSBF(sSOli(2),E)
+odf3 = SO3FunSBF(sSOli(3),E)
+odf4 = SO3FunSBF(sSOrtho,E)
+
+%%
+% Lets check our expectation from the last paragraph by visualizing the
+% odf corresponding to the second slip system in sigma sections
+
+figure(1)
+plotSection(odf2,'sigma')
+mtexColorbar
+
+%%
+% We observe exactly the concentration of the c-axis around z as predicted
+% by the model. This can be seen even more clear when looking a the pole
+% figures
+
+h = Miller({1,0,0},{0,1,0},{0,0,1},csOli);
+
+plotPDF(odf2,h,'resolution',2*degree,'colorRange','equal')
+mtexColorbar
+
+%% 
+% We could also have computed the solution of the continuity equation
+% numerically. To this end we utilize the command <doEulerStep.html
+% |doEulerStep|> which takes as input the crystallographic spin tensor
+% |Omega|, the initial odf |odf0| and the number of iterations to be
+% performed.
+
+% the starting ODF
+odf0 = uniformODF(csOli);
+
+% the transformed ODF
+odf = doEulerStep(2*Omega,odf0,40)
+
+figure(2)
+plot(odf,'sigma')
+mtexColorbar
+
+%%
+% Indeed the error between the numerical solution and the theoretical
+% solution is neglectable small. We may quantify the difference by
+
+mean(abs(odf - odf2))
+
+%%
+% For completeness the pole figures of the other two basis functions.
+
+plotPDF(odf1,h,'resolution',2*degree,'colorRange','equal')
+mtexColorbar
+
+%%
+
+plotPDF(odf3,h,'resolution',2*degree,'colorRange','equal')
+mtexColorbar
+
+%% 
+% We observe that the pole figure with respect to $n \times b$ is always
+% uniform, where $n$ is the slip normal and $b$ is the slip direction.
+%
+%%
+% Since in practice all three slip systems are active we can model the
+% resulting ODF as a linear combination of the different basis functions
+
+plotPDF(odf1 + odf2 + odf3,h,'resolution',2*degree,'colorRange','equal')
+mtexColorbar
+
+%% Checking the for steady state
+% We may also check for which orientations an ODF is already in a steady
+% state of the continuity equation, i.e., the time derivative $\text{div}(f
+% \Omega) = 0$ is zero.
+
+plotSection(div(odf2 .* Omega),'sigma')
+mtexColorMap blue2red
+mtexColorbar
+setColorRange(max(abs(clim))*[-1,1])
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>

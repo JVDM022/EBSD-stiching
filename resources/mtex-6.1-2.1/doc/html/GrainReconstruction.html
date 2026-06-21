@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Grain Reconstruction</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-09-12">
+<meta name="DC.source" content="script_GrainReconstruction.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Grain Reconstruction</h1>
+<!--introduction-->
+<!--/introduction-->
+<p>By grain reconstruction we mean the subdivision of the specimen, or more precisely the measured surface of the specimen, into regions of similar orientation which we then call grains. Note that there is no canonical definition of what is a grain. The default grain reconstruction method in MTEX is based on the definition of high angle grain boundaries which are assumed at the perpendicular bisector between neighbouring measurements whenever their misorientation angle exceeds a certain threshold. According to this point of view grains are regions surrounded by grain boundaries.</p>
+<p>In order to illustrate the grain reconstruction process we consider the following sample data set</p>
+<pre class="codeinput">close<span class="string">all</span>;plotx2east<span class="comment">% import the data</span>mtexdata<span class="string">forsterite</span><span class="comment">% restrict it to a subregion of interest.</span>ebsd=ebsd(inpolygon(ebsd,[52105]*10^3));<span class="comment">% gridify the data</span>ebsd=ebsd.gridify;<span class="comment">% make a phase plot</span>plot(ebsd)
+</pre>
+<pre class="codeoutput"> 
+ebsd = EBSD
+ 
+ Phase  Orientations     Mineral         Color  Symmetry  Crystal reference frame
+     0   58485 (24%)  notIndexed                                                 
+     1  152345 (62%)  Forsterite  LightSkyBlue       mmm                         
+     2   26058 (11%)   Enstatite  DarkSeaGreen       mmm                         
+     3   9064 (3.7%)    Diopside     Goldenrod     12/m1       X||a*, Y||b*, Z||c
+ 
+ &lt;strong&gt;Properties&lt;/strong&gt;: bands, bc, bs, error, mad
+ &lt;strong&gt;Scan unit&lt;/strong&gt; : um
+ &lt;strong&gt;X x Y x Z&lt;/strong&gt; : [0 36550] x [0 16750] x [0 0]
+ &lt;strong&gt;Normal vector&lt;/strong&gt;: (0,0,1)
+ 
+</pre>
+<img vspace="50" hspace="5" src="GrainReconstruction_01.png" alt=""> <h2 id="2">Basic grain reconstruction</h2>
+<p>We see that there are a lot of not indexed measurements. For grain reconstruction, we have three different choices how to deal with these unindexed regions:</p>
+<div>
+<ol>
+<li>leave them unindexed</li>
+<li>assign them to the surrounding grains</li>
+<li>a mixture of both, e.g., assign small notindexed regions to the surrounding grains but keep large notindexed regions</li>
+</ol>
+</div>
+<p>The extent to which unindexed pixels are assigned is controlled by the parameter <tt>'alpha'</tt>. Roughly speaking this parameter is the radius of the smallest unindexed region that will not be entirely assigned to surrounding grains. The default of this value is 2.2.</p>
+<p>The second parameter involved in grain reconstruction is the threshold misorientation angle indicating a grain boundary. By default, this value is set to 10 degrees.</p>
+<p>All grain reconstruction methods in MTEX are accessible via the command <a href="EBSD.calcGrains.html">calcGrains</a> which takes as input an EBSD data set and returns a list of grain.</p>
+<pre class="codeinput">[grains,ebsd.grainId]=calcGrains(ebsd,<span class="string">'alpha'</span>,2.2,<span class="string">'angle'</span>,10*degree);grains
+</pre>
+<pre class="codeoutput"> 
+grains = grain2d
+ 
+ Phase  Grains  Pixels     Mineral  Symmetry  Crystal reference frame
+     1     109   14093  Forsterite       mmm                         
+     2      34    1397   Enstatite       mmm                         
+     3      71     759    Diopside     12/m1       X||a*, Y||b*, Z||c
+ 
+ boundary segments: 4198 (194612 &micro;m)
+ inner boundary segments: 1 (19 &micro;m)
+ triple points: 225
+ 
+ &lt;strong&gt;Properties&lt;/strong&gt;: meanRotation, GOS
+ 
+</pre>
+<p>The reconstructed grains are stored in the variable <tt>grains</tt>. To visualize the grains we can plot its boundaries by the command <a href="grainBoundary.plot.html"><tt>plot</tt></a>.</p>
+<pre class="codeinput">
+<span class="comment">% start overide mode</span>hold<span class="string">on</span><span class="comment">% plot the boundary of all grains</span>plot(grains.boundary,<span class="string">'linewidth'</span>,1.5)<span class="comment">% stop overide mode</span>hold<span class="string">off</span>
+</pre>
+<img vspace="50" hspace="5" src="GrainReconstruction_02.png" alt=""> <h2 id="4">Grainboundary Smoothing</h2>
+<p>Due to the gridded nature of the EBSD measurement the reconstructed grain boundaries often suffer from the staircase effect. This can be reduced by smoothing the grain boundaries using the command <a href="grain2d.smooth.html"><tt>smooth</tt></a>
+</p>
+<pre class="codeinput">grains=smooth(grains,5);<span class="comment">% display the result</span>plot(ebsd)hold<span class="string">on</span>plot(grains.boundary,<span class="string">'linewidth'</span>,1.5)hold<span class="string">off</span>
+</pre>
+<img vspace="50" hspace="5" src="GrainReconstruction_03.png" alt=""> <h2 id="5">Adapting the Alpha Paramter</h2>
+<p>Increasing the parameter <tt>'alpha'</tt> larger unindexed regions are associated to grains.</p>
+<pre class="codeinput">[grains,ebsd.grainId]=calcGrains(ebsd,<span class="string">'alpha'</span>,10,<span class="string">'angle'</span>,10*degree);grains=smooth(grains,5);<span class="comment">% plot the boundary of all grains</span>plot(ebsd)hold<span class="string">on</span>plot(grains.boundary,<span class="string">'linewidth'</span>,1.5)hold<span class="string">off</span>
+</pre>
+<img vspace="50" hspace="5" src="GrainReconstruction_04.png" alt=""> <h2 id="6">Clearing Single Pixel Grains</h2>
+<p>There are quite a few single pixel grains we might want to consider as misindexations and perform the grain reconstruction on the cleaned up data set. This is done as follows</p>
+<pre class="codeinput">
+<span class="comment">% detect single pixel grains</span>isMisindexed=grains.grainSize==1;<span class="comment">% set the corresponding EBSD data to notIndexed</span>ebsd(grains(isMisindexed))=<span class="string">'notIndexed'</span>;<span class="comment">% redo grain reconstruction</span>[grains,ebsd.grainId]=calcGrains(ebsd,<span class="string">'alpha'</span>,3.2,<span class="string">'angle'</span>,10*degree);<span class="comment">% display the result</span>grains=smooth(grains,5);plot(ebsd)hold<span class="string">on</span>plot(grains.boundary,<span class="string">'linewidth'</span>,1.5)hold<span class="string">off</span>
+</pre>
+<img vspace="50" hspace="5" src="GrainReconstruction_05.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Grain Reconstruction
+%
+%%
+% By grain reconstruction we mean the subdivision of the specimen, or more
+% precisely the measured surface of the specimen, into regions of similar
+% orientation which we then call grains. Note that there is no canonical
+% definition of what is a grain. The default grain reconstruction method in
+% MTEX is based on the definition of high angle grain boundaries which are
+% assumed at the perpendicular bisector between neighbouring measurements
+% whenever their misorientation angle exceeds a certain threshold.
+% According to this point of view grains are regions surrounded by grain
+% boundaries.
+%
+% In order to illustrate the grain reconstruction process we consider the
+% following sample data set
+
+close all; plotx2east
+
+% import the data
+mtexdata forsterite
+
+% restrict it to a subregion of interest.
+ebsd = ebsd(inpolygon(ebsd,[5 2 10 5]*10^3));
+
+% gridify the data
+ebsd = ebsd.gridify;
+
+% make a phase plot
+plot(ebsd)
+
+%% Basic grain reconstruction
+%
+% We see that there are a lot of not indexed measurements. For grain
+% reconstruction, we have  three different choices how to deal with these
+% unindexed regions:
+%
+% # leave them unindexed
+% # assign them to the surrounding grains
+% # a mixture of both, e.g., assign small notindexed regions to the
+% surrounding grains but keep large notindexed regions
+%
+% The extent to which unindexed pixels are assigned is controlled by the
+% parameter |'alpha'|. Roughly speaking this parameter is the radius of the
+% smallest unindexed region that will not be entirely assigned to
+% surrounding grains. The default of this value is 2.2.
+%
+% The second parameter involved in grain reconstruction is the threshold
+% misorientation angle indicating a grain boundary. By default, this value
+% is set to 10 degrees.
+%
+% All grain reconstruction methods in MTEX are accessible via the command 
+% <EBSD.calcGrains.html calcGrains> which takes as input an EBSD data set
+% and returns a list of grain.
+
+[grains, ebsd.grainId] = calcGrains(ebsd,'alpha',2.2,'angle',10*degree);
+grains
+
+%%
+% The reconstructed grains are stored in the variable |grains|. To
+% visualize the grains we can plot its boundaries by the command
+% <grainBoundary.plot.html |plot|>.
+
+% start overide mode
+hold on
+
+% plot the boundary of all grains
+plot(grains.boundary,'linewidth',1.5)
+
+% stop overide mode
+hold off
+
+%% Grainboundary Smoothing 
+% 
+% Due to the gridded nature of the EBSD measurement the reconstructed grain
+% boundaries often suffer from the staircase effect. This can be reduced by
+% smoothing the grain boundaries using the command <grain2d.smooth.html
+% |smooth|>
+
+grains = smooth(grains,5);
+
+% display the result
+plot(ebsd)
+hold on
+plot(grains.boundary,'linewidth',1.5)
+hold off
+
+%% Adapting the Alpha Paramter
+% Increasing the parameter |'alpha'| larger unindexed regions are
+% associated to grains.
+
+[grains, ebsd.grainId] = calcGrains(ebsd,'alpha',10,'angle',10*degree);
+grains = smooth(grains,5);
+
+% plot the boundary of all grains
+plot(ebsd)
+hold on
+plot(grains.boundary,'linewidth',1.5)
+hold off
+
+%% Clearing Single Pixel Grains
+%
+% There are quite a few single pixel grains we might want to consider
+% as misindexations and perform the grain reconstruction on the
+% cleaned up data set. This is done as follows
+
+% detect single pixel grains
+isMisindexed = grains.grainSize==1;
+
+% set the corresponding EBSD data to notIndexed
+ebsd(grains(isMisindexed)) = 'notIndexed';
+
+% redo grain reconstruction
+[grains, ebsd.grainId] = calcGrains(ebsd,'alpha',3.2,'angle',10*degree);
+
+% display the result
+grains = smooth(grains,5);
+plot(ebsd)
+hold on
+plot(grains.boundary,'linewidth',1.5)
+hold off
+
+##### SOURCE END #####
+-->
+</body>
+</html>

@@ -1,0 +1,30 @@
+function grains = cat(~,varargin)
+% implements [grain1, grain2]
+%
+% Syntax
+%   g = [grains_1, grains_2, grains_n]
+%   g = [grains('fe') grains('mg')]
+%   g = [grains(1:100) grains(500:end)]
+%
+% See also
+% grain2d/vertcat
+
+grains = cat@dynProp(1,varargin{:});
+
+for k = 2:numel(varargin)
+
+  ng = varargin{k};
+  
+  if isempty(ng), continue; end
+  grains.id = [grains.id; ng.id];
+  grains.phaseId = [grains.phaseId; ng.phaseId];
+  grains.numPixel = [grains.numPixel; ng.numPixel];
+  grains.poly = [grains.poly; ng.poly];
+  grains.inclusionId = [grains.inclusionId; ng.inclusionId];
+  grains.boundary = [grains.boundary; ng.boundary];
+  grains.innerBoundary = [grains.innerBoundary; ng.innerBoundary];
+
+  assert(angle(ng.N, grains.N,'antipodal')<1e-5,...
+    'Concatenating grains with different normals is not supported');
+  
+end

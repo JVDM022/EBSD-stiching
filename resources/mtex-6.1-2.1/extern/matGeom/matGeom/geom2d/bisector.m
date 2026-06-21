@@ -1,0 +1,60 @@
+function ray = bisector(varargin)
+%BISECTOR Return the bisector of two lines, or 3 points.
+%
+%   RAY = bisector(LINE1, LINE2);
+%   create the bisector of the two lines, given as [x0 y0 dx dy].
+%
+%   RAY = bisector(P1, P2, P3);
+%   create the bisector of lines (P2 P1) and (P2 P3).
+%
+%   The result has the form [x0 y0 dx dy], with [x0 y0] being the origin
+%   point ans [dx dy] being the direction vector, normalized to have unit
+%   norm.
+%   
+%   See also 
+%   lines2d, rays2d
+
+% ------
+% Author: David Legland
+% E-mail: david.legland@inrae.fr
+% Created: 2003-10-31
+% Copyright 2003-2023 INRA - Cepia Software Platform
+
+if length(varargin)==2
+    % two lines
+    line1 = varargin{1};
+    line2 = varargin{2};
+    
+    point = intersectLines(line1, line2);    
+    
+elseif length(varargin)==3
+    % three points
+    p1 = varargin{1};
+    p2 = varargin{2};
+    p3 = varargin{3};
+
+    line1 = createLine(p2, p1);
+    line2 = createLine(p2, p3);
+    point = p2;
+    
+elseif isscalar(varargin)
+    % three points, given in one array
+    var = varargin{1};
+    p1 = var(1, :);
+    p2 = var(2, :);
+    p3 = var(3, :);
+
+    line1 = createLine(p2, p1);
+    line2 = createLine(p2, p3);
+    point = p2;
+end
+
+% compute line angles
+a1 = lineAngle(line1);
+a2 = lineAngle(line2);
+
+% compute bisector angle (angle of first line + half angle between lines)
+angle = mod(a1 + mod(a2-a1+2*pi, 2*pi)/2, pi*2);
+
+% create the resulting ray
+ray = [point cos(angle) sin(angle)];

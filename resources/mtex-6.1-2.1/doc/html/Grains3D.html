@@ -1,0 +1,419 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>3D Grains</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-09-12">
+<meta name="DC.source" content="script_Grains3D.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>3D Grains</h1>
+<!--introduction-->
+<!--/introduction-->
+<p>grain3d is a structure to store 3D grain data. At the moment 3d data is usually obtained from <a href="NeperInterface.html">neper tessellations</a> or triangulated Dream3d data sets.</p>
+<h2 id="2">Grain sets from Dream3d</h2>
+<pre class="codeinput">grains_dream_3d=grain3d.load(fullfile(mtexDataPath,<span class="string">'EBSD'</span>,<span class="string">'SmallIN100_MeshStats.dream3d'</span>));<span class="comment">% for triangulated data sets it may be useful to plot them without lines</span>plot(grains_dream_3d,grains_dream_3d.meanOrientation,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>)
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_01.png" alt=""> <h2 id="3">Plot the normal directions of one grain</h2>
+<pre class="codeinput">grains=grains_dream_3d(1)dir=grains.I_GF(1,:)'.*grains.boundary.N<span class="comment">% flip according to I_GF</span>quiver(grains.boundary,dir)plot(grains)
+</pre>
+<pre class="codeoutput"> 
+grains = grain3d
+ 
+ Phase  Grains  Volume  Mineral  Symmetry  Crystal reference frame
+     2       1      16  unknown       622       X||a*, Y||b, Z||c*
+ 
+ boundary faces: 748
+ 
+ Id   Phase   Pixels      meanRotation
+  1       2        1   (207&deg;,35&deg;,319&deg;)
+ 
+ 
+dir = vector3d
+ size: 748 x 1
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_02.png" alt=""> <h2 id="4">Grain sets from neper</h2>
+<pre class="codeinput">job=neperInstancecs=crystalSymmetry(<span class="string">'432'</span>,<span class="string">'mineral'</span>,<span class="string">'copper'</span>);ori=orientation.rand(cs);odf=unimodalODF(ori);numGrains=100;grains3=job.simulateGrains(odf,numGrains)<span class="comment">% or you can load an existing tessellation file</span><span class="comment">%grains3 = grain3d.load('allgrains.tess','CS',cs)</span>
+</pre>
+<pre class="codeoutput">job = 
+  neperInstance with properties:
+
+              id: 1
+        cubeSize: [1 1 1]
+          morpho: 'graingrowth'
+         iterMax: 1000
+    varNeperopts: []
+      fileName2d: '2dslice'
+      fileName3d: 'allgrains'
+        filePath: '/tmp/neper/'
+
+========================    N   e   p   e   r    =======================
+Info   : A software package for polycrystal generation and meshing.
+Info   : Version 4.9.1-4
+Info   : Built with: gsl|muparser|opengjk|openmp|nlopt|libscotch (full)
+Info   : Running on 12 threads.
+Info   : &lt;https://neper.info&gt;
+Info   : Copyright (C) 2003-2022, and GNU GPL'd, by Romain Quey.
+Info   : No initialization file found (`/home/hielscher/.neperrc').
+Info   : ---------------------------------------------------------------
+Info   : MODULE  -T loaded with arguments:
+Info   : [ini file] (none)
+Info   : [com line] -n 100 -id 1 -morpho graingrowth -domain cube(1,1,1)
+         -morphooptistop itermax=1000 -oricrysym m-3m -ori
+         file(/tmp/neper/ori_in.txt) -statpoly faceeqs -o
+         /tmp/neper/allgrains -oridescriptor rodrigues -oriformat plain
+         -format tess,ori
+Info   : ---------------------------------------------------------------
+Info   : Reading input data...
+Warning:   - Option `-oricrysym' will be removed in a future version.  Use `-crysym` instead.
+Info   : Creating domain...
+Info   : Creating tessellation...
+Info   :   - Setting seeds... 100%
+Info   :   - Running tessellation...
+Info   :     &gt; Initial solution: f   =2.806198409
+Info   :     &gt; Iteration   1000: fmin=0.566500872 f=0.566500872
+Info   :     &gt; Final   solution: f   =0.566500872
+Info   :     &gt; Final solution  : f   =0.566500872 (1001 iterations)
+Info   :     &gt; Reached `itermax' criterion.
+Info   : Generating crystal orientations...
+Info   :     [i] Parsing file `/tmp/neper/ori_in.txt'...
+Info   :     [i] Parsed file `/tmp/neper/ori_in.txt'.
+Info   : Writing results...
+Info   :     [o] Writing file `/tmp/neper/allgrains.tess'...
+Info   :     [o] Wrote file `/tmp/neper/allgrains.tess'.
+Info   :     [o] Writing file `/tmp/neper/allgrains.ori'...
+Info   :     [o] Wrote file `/tmp/neper/allgrains.ori'.
+Info   : Writing statistics...
+Info   :     [o] Writing file `/tmp/neper/allgrains.stpoly'...
+Info   :     [o] Wrote file `/tmp/neper/allgrains.stpoly'.
+Info   : Elapsed time: 5.912 secs.
+========================================================================
+
+
+========================    N   e   p   e   r    =======================
+Info   : A software package for polycrystal generation and meshing.
+Info   : Version 4.9.1-4
+Info   : Built with: gsl|muparser|opengjk|openmp|nlopt|libscotch (full)
+Info   : Running on 12 threads.
+Info   : &lt;https://neper.info&gt;
+Info   : Copyright (C) 2003-2022, and GNU GPL'd, by Romain Quey.
+Info   : No initialization file found (`/home/hielscher/.neperrc').
+Info   : ---------------------------------------------------------------
+Info   : MODULE  -V loaded with arguments:
+Info   : [ini file] (none)
+Info   : [com line] /tmp/neper/allgrains.tess
+Info   : ---------------------------------------------------------------
+Info   :   - Reading arguments...
+Info   : Elapsed time: 0.001 secs.
+========================================================================
+
+ 
+grains3 = grain3d
+ 
+ Phase  Grains  Volume  Mineral  Symmetry  Crystal reference frame
+     2     100       1   copper       432                         
+ 
+ boundary faces: 650
+ 
+ &lt;strong&gt;Properties&lt;/strong&gt;: meanRotation
+ 
+</pre>
+<h2 id="5">Plotting Grains</h2>
+<pre class="codeinput">
+<span class="comment">% set camera</span>how2plot=plottingConvention;how2plot.outOfScreen=vector3d(-10,-5,2);how2plot.east=vector3d(1,-2,0);<span class="comment">% colorize by mean orientation</span>plot(grains3,grains3.meanOrientation)setCamera(how2plot)
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_03.png" alt=""> <h2 id="6">Rotation</h2>
+<p>rotate 180 degrees about the x-axis</p>
+<pre class="codeinput">rot=rotation.byAxisAngle(xvector,180*degree);grains3_rot=rot*grains3;<span class="comment">% or rotate(grains3,rot)</span><span class="comment">% plotting</span>plot(grains3_rot,grains3_rot.meanOrientation)
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_04.png" alt=""> <p>colorize by volume</p>
+<pre class="codeinput">plot(grains3,grains3.volume)setCamera(how2plot)
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_05.png" alt=""> <p>plot single grains, color by phase</p>
+<pre class="codeinput">figuregrains=grains3(1:5)plot(grains)
+</pre>
+<pre class="codeoutput"> 
+grains = grain3d
+ 
+ Phase  Grains  Volume  Mineral  Symmetry  Crystal reference frame
+     2       5   0.045   copper       432                         
+ 
+ boundary faces: 56
+ 
+ Id   Phase   Pixels            meanRotation
+  1       2        1    (236.7&deg;,5.1&deg;,157.8&deg;)
+  2       2        1   (257.5&deg;,22.1&deg;,132.6&deg;)
+  3       2        1     (294.8&deg;,21.1&deg;,101&deg;)
+  4       2        1    (311.8&deg;,20.8&deg;,89.7&deg;)
+  5       2        1     (300.1&deg;,19&deg;,100.8&deg;)
+ 
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_06.png" alt=""> <h2 id="9">Triangulation</h2>
+<p>Some functions are much faster on triangulated meshes. Therefore you can triangulate your grains with the following command.</p>
+<pre class="codeinput">grainsTri=grains3.triangulate
+</pre>
+<pre class="codeoutput"> 
+grainsTri = grain3d
+ 
+ Phase  Grains  Volume  Mineral  Symmetry  Crystal reference frame
+     2     100       1   copper       432                         
+ 
+ boundary faces: 2608
+ 
+ &lt;strong&gt;Properties&lt;/strong&gt;: meanRotation
+ 
+</pre>
+<h2 id="10">Slicing</h2>
+<p>To get the usually used 2d grain data, it is possible to slice 3d grains by different methods.</p>
+<pre class="codeinput">
+<span class="comment">% make all slices passing through this point</span>P0=vector3d(0.5,0.5,0.5);<span class="comment">% Slice by plane normal and point</span>N=vector3d(1,-1,0);grains1_10=grains3.slice(N,P0)how2plot=plottingConvention;how2plot.outOfScreen=N;plot(grains1_10,grains1_10.meanOrientation)setCamera(how2plot)
+</pre>
+<pre class="codeoutput"> 
+grains1_10 = grain2d
+ 
+ Phase  Grains  Pixels  Mineral  Symmetry  Crystal reference frame
+     2      39      39   copper       432                         
+ 
+ boundary segments: 118 (16 &micro;m)
+ inner boundary segments: 0 (0 &micro;m)
+ triple points: 59
+ 
+ &lt;strong&gt;Properties&lt;/strong&gt;: meanRotation
+ 
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_07.png" alt=""> <pre class="codeinput">
+<span class="comment">% Slice by matgeom plane</span>N3=vector3d(2,2,4);plane=createPlane(P0.xyz,N3.xyz);<span class="comment">% consider the different order</span>grains224=grains3.slice(plane);<span class="comment">% Slice going through 3 points</span>A=vector3d(0,0,0.5);B=vector3d(0,1,0.5);grains001=grains3.slice(P0,A,B);<span class="comment">% plot the slices</span>plot(grains001,grains001.meanOrientation);hold<span class="string">on</span>plot(grains1_10,grains1_10.meanOrientation);hold<span class="string">on</span>plot(grains224,grains224.meanOrientation);<span class="comment">% set camera</span>how2plot=plottingConvention;how2plot.outOfScreen=vector3d(-10,-5,2);how2plot.east=vector3d(1,-2,0);setCamera(how2plot)
+</pre>
+<pre class="codeoutput">Warning: still can not concatenate grains on different slices 
+Warning: still can not concatenate grains on different slices 
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_08.png" alt=""> <p>Plot single 3D grains together with slices</p>
+<pre class="codeinput">grains=grains3(1:5)plot(grains,grains.meanOrientation)how2plot.outOfScreen=vector3d(-10,-4,1);how2plot.east=vector3d(2,-5,0);setCamera(how2plot)
+</pre>
+<pre class="codeoutput"> 
+grains = grain3d
+ 
+ Phase  Grains  Volume  Mineral  Symmetry  Crystal reference frame
+     2       5   0.045   copper       432                         
+ 
+ boundary faces: 56
+ 
+ Id   Phase   Pixels            meanRotation
+  1       2        1    (236.7&deg;,5.1&deg;,157.8&deg;)
+  2       2        1   (257.5&deg;,22.1&deg;,132.6&deg;)
+  3       2        1     (294.8&deg;,21.1&deg;,101&deg;)
+  4       2        1    (311.8&deg;,20.8&deg;,89.7&deg;)
+  5       2        1     (300.1&deg;,19&deg;,100.8&deg;)
+ 
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_09.png" alt=""> <h2 id="13">Slice Dream3d Grains</h2>
+<p>still inefficient, expensive</p>
+<pre class="codeinput">N=vector3d(1,1,1);P0=vector3d(0.5,0.5,0.5);slice=grains_dream_3d.slice(N,P0);plot(slice,slice.meanOrientation);
+</pre>
+<img vspace="50" hspace="5" src="Grains3D_10.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% 3D Grains
+%
+%%
+% grain3d is a structure to store 3D grain data. At the moment 3d data 
+% is usually obtained from <NeperInterface.html neper tessellations> or 
+% triangulated Dream3d data sets.
+%
+%% Grain sets from Dream3d
+
+grains_dream_3d = grain3d.load(fullfile(mtexDataPath,'EBSD','SmallIN100_MeshStats.dream3d'));
+
+% for triangulated data sets it may be useful to plot them without lines
+plot(grains_dream_3d,grains_dream_3d.meanOrientation,'LineStyle','none')
+
+%% Plot the normal directions of one grain
+grains = grains_dream_3d(1)
+dir = grains.I_GF(1,:)' .* grains.boundary.N  % flip according to I_GF
+quiver(grains.boundary,dir)
+plot(grains)
+
+%% Grain sets from neper
+
+job = neperInstance
+cs = crystalSymmetry('432','mineral','copper');
+ori = orientation.rand(cs);
+odf = unimodalODF(ori);
+numGrains=100;
+
+grains3 = job.simulateGrains(odf,numGrains)
+% or you can load an existing tessellation file
+%grains3 = grain3d.load('allgrains.tess','CS',cs)
+
+%% Plotting Grains
+
+% set camera
+how2plot = plottingConvention;
+how2plot.outOfScreen = vector3d(-10,-5,2);
+how2plot.east = vector3d(1,-2,0);
+
+% colorize by mean orientation
+plot(grains3,grains3.meanOrientation)
+setCamera(how2plot)
+
+%% Rotation
+% rotate 180 degrees about the x-axis
+rot = rotation.byAxisAngle(xvector,180*degree);
+grains3_rot = rot * grains3;   % or rotate(grains3,rot)
+
+% plotting
+plot(grains3_rot,grains3_rot.meanOrientation)
+
+%% 
+% colorize by volume
+plot(grains3,grains3.volume)
+setCamera(how2plot)
+
+%% 
+% plot single grains, color by phase
+figure
+grains = grains3(1:5)
+plot(grains)
+
+%% Triangulation
+% Some functions are much faster on triangulated meshes. Therefore you can
+% triangulate your grains with the following command.
+
+grainsTri = grains3.triangulate
+
+%% Slicing
+%
+% To get the usually used 2d grain data, it is possible to slice 3d grains
+% by different methods.
+
+% make all slices passing through this point
+P0 = vector3d(0.5,0.5,0.5);
+
+% Slice by plane normal and point
+N = vector3d(1,-1,0);
+grains1_10 = grains3.slice(N,P0)
+
+how2plot = plottingConvention;
+how2plot.outOfScreen = N;
+plot(grains1_10,grains1_10.meanOrientation)
+setCamera(how2plot)
+
+%%
+
+% Slice by matgeom plane
+N3 = vector3d(2,2,4);
+plane = createPlane(P0.xyz, N3.xyz);     % consider the different order
+grains224 = grains3.slice(plane);
+
+% Slice going through 3 points
+A = vector3d(0,0,0.5);
+B = vector3d(0,1,0.5);
+grains001 = grains3.slice(P0,A,B);
+
+% plot the slices
+plot(grains001,grains001.meanOrientation);
+hold on
+plot(grains1_10,grains1_10.meanOrientation);
+hold on
+plot(grains224,grains224.meanOrientation);
+
+% set camera
+how2plot = plottingConvention;
+how2plot.outOfScreen = vector3d(-10,-5,2);
+how2plot.east = vector3d(1,-2,0);
+setCamera(how2plot)
+
+%% 
+% Plot single 3D grains together with slices
+grains = grains3(1:5)
+
+plot(grains,grains.meanOrientation)
+how2plot.outOfScreen = vector3d(-10,-4,1);
+how2plot.east = vector3d(2,-5,0);
+setCamera(how2plot)
+
+%% Slice Dream3d Grains
+% still inefficient, expensive
+N = vector3d(1,1,1);
+P0 = vector3d(0.5,0.5,0.5);
+
+slice = grains_dream_3d.slice(N,P0);
+plot(slice,slice.meanOrientation);
+##### SOURCE END #####
+-->
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>The Tangent Space on the Rotation Group</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-09-12">
+<meta name="DC.source" content="script_SO3FunTangentSpace.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>The Tangent Space on the Rotation Group</h1>
+<!--introduction-->
+<!--/introduction-->
+<p>The tangent space of the rotation group at some rotation <img src="SO3FunTangentSpace_eq04843170888871284642.png" alt="$R$"> has 2 different representations. There is a left and a right representation.</p>
+<p>The left tangent space is defined by</p>
+<p>$$ T_R SO(3) = \{ S \cdot R | S=-S^T  \} = \mathfrak{so}(3) \cdot R, $$</p>
+<pre class="error">Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax: 
+$$ T_R SO(3) = \{ S \cdot R | S=-S^T  \} = \mathfrak{so}(3) \cdot R, $$
+</pre>
+<p>where $\mathfrak{so}(3)$ describes the set of all skew symmetric matrices, i.e. <a href="spinTensor.spinTensor.html">spinTensor</a>'s.</p>
+<pre class="error">Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax: 
+$\mathfrak{so}(3)$
+</pre>
+<pre class="codeinput">R=rotation.byAxisAngle(xvector,20*degree)S1=spinTensor(vector3d(0,0,1))<span class="comment">% left tangent vector</span>matrix(S1)*matrix(R)
+</pre>
+<pre class="codeoutput"> 
+R = rotation
+ 
+  Bunge Euler angles in degree
+  phi1  Phi phi2
+     0   20    0
+ 
+ 
+S1 = spinTensor (xyz)
+  rank: 2 (3 x 3)
+ 
+  0 -1  0
+  1  0  0
+  0  0  0
+ans =
+         0   -0.9397    0.3420
+    1.0000         0         0
+         0         0         0
+</pre>
+<p>Analogously the right tangent space is defined by</p>
+<p>$$ T_R SO(3) = \{ R \cdot S | S=-S^T  \} = R \cdot \mathfrak{so}(3). $$</p>
+<pre class="error">Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax: 
+$$ T_R SO(3) = \{ R \cdot S | S=-S^T  \} = R \cdot \mathfrak{so}(3). $$
+</pre>
+<pre class="codeinput">
+<span class="comment">% right tangent vector</span>S2=spinTensor(vector3d(0,sin(20*degree),cos(20*degree)))matrix(R)*matrix(S2)
+</pre>
+<pre class="codeoutput"> 
+S2 = spinTensor (xyz)
+  rank: 2 (3 x 3)
+ 
+ *10^-2
+      0 -93.97   34.2
+  93.97      0      0
+  -34.2      0      0
+ans =
+         0   -0.9397    0.3420
+    1.0000         0         0
+    0.0000         0         0
+</pre>
+<p>Note that the left and right tangent spaces describes the same in different notations.</p>
+<p>In MTEX a tangent vectors is defined by its <a href="spinTensor.spinTensor.html">spinTensor</a> and an attribute which describes whether it is right or left. Moreover the <a href="spinTensor.spinTensor.html">spinTensor</a> is saved as <a href="vector3d.vector3d.html">vector3d</a>, in the following way:</p>
+<pre class="codeinput">vL=SO3TangentVector(vector3d(1,2,3))S=spinTensor(vL)
+</pre>
+<pre class="codeoutput"> 
+vL = SO3TangentVector
+ TagentSpace: leftVector
+  x y z
+  1 2 3
+ 
+S = spinTensor (xyz)
+  rank: 2 (3 x 3)
+ 
+  0 -3  2
+  3  0 -1
+ -2  1  0
+</pre>
+<p>Note that the default tangent space representation is left. We can construct an right tangent vector by</p>
+<pre class="codeinput">vR=SO3TangentVector(vector3d(1,2,3),SO3TangentSpace.rightVector)
+</pre>
+<pre class="codeoutput"> 
+vR = SO3TangentVector
+ TagentSpace: rightVector
+  x y z
+  1 2 3
+</pre>
+<p>Here <tt>vL</tt> and <tt>vR</tt> have the same coordinates in different spaces (bases). Hence they describe different tangent vectors.</p>
+<p>We can also transform left tangent vectors to right tangent vectors and vice versa. Therefore the rotation in which the tangent space is located is necessary.</p>
+<pre class="codeinput">vR=right(vL,R)vL=left(vR,R)
+</pre>
+<pre class="codeoutput"> 
+vR = SO3TangentVector
+ TagentSpace: rightVector
+  x       y       z
+  1 2.90545 2.13504
+ 
+vL = SO3TangentVector
+ TagentSpace: leftVector
+  x y z
+  1 2 3
+</pre>
+<p>We can do the same manually by</p>
+<pre class="codeinput">vR=inv(R)*vLvL=R*vR
+</pre>
+<pre class="codeoutput"> 
+vR = vector3d
+  x       y       z
+  1 2.90545 2.13504
+ 
+vL = vector3d
+  x y z
+  1 2 3
+</pre>
+<h2 id="7">Vector Fields</h2>
+<p>Vector fields on the rotation group are functions that maps any rotation to an tangent vector. An important example is the gradient of an <tt><a href="SO3Fun.SO3Fun.html">SO3Fun</a></tt>.</p>
+<p>Hence any vector field has again a left and a right representation.</p>
+<pre class="codeinput">F=SO3Fun.dubna;F.SS=specimenSymmetry;<span class="comment">%F = SO3FunHarmonic(F);</span>rot=rotation.rand(3);<span class="comment">% left gradient in rot</span>F.grad(rot)<span class="comment">% right gradient in rot</span>inv(rot).*F.grad(rot)F.grad(rot,<span class="string">'right'</span>)
+</pre>
+<pre class="codeoutput"> 
+ans = SO3TangentVector
+ size: 3 x 1
+ TagentSpace: leftVector
+          x         y         z
+  -0.517332  0.720212  0.210333
+    3.82841  -6.31311   3.17576
+   0.229341 -0.904585  0.303611
+ 
+ans = vector3d
+ size: 3 x 1
+            x           y           z
+  -0.00506541    0.307811   -0.857791
+      1.22399    -2.29186     -7.6057
+    -0.694442    0.646549   -0.250552
+ 
+ans = SO3TangentVector
+ size: 3 x 1
+ TagentSpace: rightVector
+            x           y           z
+  -0.00506541    0.307811   -0.857791
+      1.22399    -2.29186     -7.6057
+    -0.694442    0.646549   -0.250552
+</pre>
+<p>The gradient can also be computed as function, i.e. as <a href="SO3VectorField.SO3VectorField.html">SO3VectorField</a>, which internal is an 3 dimensional <a href="SO3Fun.SO3Fun.html">SO3Fun</a>.</p>
+<pre class="codeinput">GL=F.gradGR=F.grad(<span class="string">'right'</span>)GL.eval(rot)GR.eval(rot)
+</pre>
+<pre class="codeoutput"> 
+GL = SO3VectorFieldHarmonic (Quartz &rarr; xyz)
+  bandwidth: 48
+  tangent space: leftVector
+ 
+ 
+GR = SO3VectorFieldHarmonic (1 &rarr; xyz)
+  bandwidth: 48
+  tangent space: rightVector
+ 
+ 
+ans = SO3TangentVector
+ size: 3 x 1
+ TagentSpace: leftVector
+          x         y         z
+  -0.516024   0.72194  0.207755
+    3.82337  -6.31122   3.18311
+   0.229766 -0.894388  0.306024
+ 
+ans = SO3TangentVector
+ size: 3 x 1
+ TagentSpace: rightVector
+           x          y          z
+  -0.0032694   0.310504  -0.856862
+     1.22206   -2.28316    -7.6076
+   -0.689402   0.637834  -0.253498
+</pre>
+<p>Again we are able to change the tangent space</p>
+<pre class="codeinput">left(GR)right(GL)
+</pre>
+<pre class="codeoutput"> 
+ans = SO3VectorFieldHarmonic (1 &rarr; xyz)
+  bandwidth: 48
+  tangent space: leftVector
+ 
+ 
+ans = SO3VectorFieldHarmonic (1 &rarr; xyz)
+  bandwidth: 48
+  tangent space: rightVector
+ 
+</pre>
+<p>Note that the symmetries do not work in the same way as for <a href="SO3Fun.SO3Fun.html">SO3Fun</a>'s. Dependent from the chosen tangent space representation (left/right) one of the symmetries has other properties.</p>
+<p>In case of right tangent space the evaluation in symmetric orientations only make sense w.r.t. the left symmetry. In case of left tangent space vice versa.</p>
+<pre class="codeinput">ori=orientation.rand(GL.CS,GL.SS)GR.eval(ori.symmetrise)GL.eval(ori.symmetrise)
+</pre>
+<pre class="codeoutput"> 
+ori = orientation (Quartz &rarr; xyz)
+ 
+  Bunge Euler angles in degree
+     phi1     Phi    phi2
+  60.7633 53.1904 253.827
+ 
+ 
+ans = SO3TangentVector
+ size: 6 x 1
+ TagentSpace: rightVector
+          x          y          z
+   0.656255    -1.0983   0.182385
+    1.27928 -0.0191826  -0.182385
+   -1.27928 -0.0191826   0.182385
+  -0.656255    -1.0983  -0.182385
+   0.623029    1.11748   0.182385
+  -0.623029    1.11748  -0.182385
+ 
+ans = SO3TangentVector
+ size: 6 x 1
+ TagentSpace: leftVector
+          x         y         z
+  -0.307468  -1.24621 -0.150426
+  -0.307468  -1.24621 -0.150426
+  -0.307468  -1.24621 -0.150426
+  -0.307468  -1.24621 -0.150426
+  -0.307468  -1.24621 -0.150426
+  -0.307468  -1.24621 -0.150426
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% The Tangent Space on the Rotation Group
+%
+%%
+% The tangent space of the rotation group at some rotation $R$ has 2 
+% different representations. There is a left and a right representation.
+%
+% The left tangent space is defined by
+%
+% $$ T_R SO(3) = \{ S \cdot R | S=-S^T  \} = \mathfrak{so}(3) \cdot R, $$
+%
+% where $\mathfrak{so}(3)$ describes the set of all skew symmetric matrices,
+% i.e. <spinTensor.spinTensor.html spinTensor>'s.
+%
+
+R = rotation.byAxisAngle(xvector,20*degree)
+S1 = spinTensor(vector3d(0,0,1))
+% left tangent vector
+matrix(S1) * matrix(R)
+
+%%
+% Analogously the right tangent space is defined by
+%
+% $$ T_R SO(3) = \{ R \cdot S | S=-S^T  \} = R \cdot \mathfrak{so}(3). $$
+
+% right tangent vector
+S2 = spinTensor(vector3d(0,sin(20*degree),cos(20*degree)))
+matrix(R)*matrix(S2)
+
+%%
+% Note that the left and right tangent spaces describes the same in 
+% different notations.
+%
+% In MTEX a tangent vectors is defined by its <spinTensor.spinTensor.html spinTensor> and an attribute 
+% which describes whether it is right or left.
+% Moreover the <spinTensor.spinTensor.html spinTensor> is saved as <vector3d.vector3d.html vector3d>, in the following way:
+%
+
+vL = SO3TangentVector(vector3d(1,2,3))
+S = spinTensor(vL)
+
+%%
+% Note that the default tangent space representation is left.
+% We can construct an right tangent vector by
+
+vR = SO3TangentVector(vector3d(1,2,3),SO3TangentSpace.rightVector)
+
+%%
+% Here |vL| and |vR| have the same coordinates in different spaces (bases). 
+% Hence they describe different tangent vectors.
+%
+% We can also transform left tangent vectors to right tangent vectors and 
+% vice versa. Therefore the rotation in which the tangent space is located
+% is necessary.
+
+vR = right(vL,R)
+vL = left(vR,R)
+
+%%
+% We can do the same manually by
+
+vR = inv(R)*vL
+vL = R*vR
+
+
+%% Vector Fields
+%
+%%
+% Vector fields on the rotation group are functions that maps any rotation
+% to an tangent vector. An important example is the gradient of an
+% |<SO3Fun.SO3Fun.html SO3Fun>|.
+%
+% Hence any vector field has again a left and a right representation.
+%
+
+F = SO3Fun.dubna;
+F.SS = specimenSymmetry;
+%F = SO3FunHarmonic(F);
+rot = rotation.rand(3);
+
+% left gradient in rot 
+F.grad(rot)
+
+% right gradient in rot
+inv(rot) .* F.grad(rot)
+F.grad(rot,'right')
+
+%%
+% The gradient can also be computed as function, i.e. as <SO3VectorField.SO3VectorField.html SO3VectorField>,
+% which internal is an 3 dimensional <SO3Fun.SO3Fun.html SO3Fun>.
+%
+
+GL = F.grad
+GR = F.grad('right')
+
+GL.eval(rot)
+GR.eval(rot)
+
+%%
+% Again we are able to change the tangent space
+
+left(GR)
+right(GL)
+
+%%
+% Note that the symmetries do not work in the same way as for <SO3Fun.SO3Fun.html SO3Fun>'s.
+% Dependent from the chosen tangent space representation (left/right) one 
+% of the symmetries has other properties.
+% 
+% In case of right tangent space the evaluation in symmetric orientations
+% only make sense w.r.t. the left symmetry.
+% In case of left tangent space vice versa.
+
+ori = orientation.rand(GL.CS,GL.SS)
+GR.eval(ori.symmetrise)
+GL.eval(ori.symmetrise)
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>

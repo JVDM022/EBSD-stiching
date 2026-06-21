@@ -1,0 +1,3 @@
+direction,n_pairs,accepted,acceptance_rate,median_misorientation_deg,p90_misorientation_deg,median_iq_corr,median_ci_corr,median_final_score
+horizontal,65,64,0.9846153846153847,0.0,0.0,1.0,1.0,0.9999999999715252
+vertical,72,71,0.9861111111111112,0.0,0.0,1.0,1.0,0.9999999999715252

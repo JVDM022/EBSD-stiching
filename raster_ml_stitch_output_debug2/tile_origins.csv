@@ -1,0 +1,9 @@
+tile_name,origin_y_px,origin_x_px,row,col
+tile_r0_c0_clean.ang,0,0,0,0
+tile_r0_c1_clean.ang,0,160,0,1
+tile_r0_c2_clean.ang,0,320,0,2
+tile_r0_c3_clean.ang,0,480,0,3
+tile_r0_c4_clean.ang,0,640,0,4
+tile_r0_c5_clean.ang,0,800,0,5
+tile_r1_c0_clean.ang,64,0,1,0
+tile_r1_c1_clean.ang,64,160,1,1

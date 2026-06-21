@@ -1,0 +1,108 @@
+function  drawNow(mtexFig, varargin)
+
+if check_option(varargin,'doNotDraw'), return;end
+
+set(mtexFig.children,'units','pixel');
+
+% update children to be only the axes of mtexFig
+mtexFig.children = flipud(findobj(mtexFig.parent,'type','axes',...
+  '-not','tag','Colorbar','-and','-not','tag','legend'));
+
+% this seems to be necessary to get tight inset right
+if ~check_option(varargin,'keepAxisSize') 
+  updateLayout(mtexFig);
+end
+
+% compute surrounding box of each axis in pixel
+[mtexFig.tightInset,mtexFig.figTightInset] = calcTightInset(mtexFig);
+
+% determine preliminary figure size
+if check_option(varargin,'position')
+  
+  position = get_option(varargin,'position');
+  figSize = position(3:4);
+  
+elseif check_option(varargin,'figSize') || mtexFig.figSizeFactor > 0 
+  
+  screenExtent = get(0,'MonitorPositions');
+    
+  mtexFig.keepAspectRatio = true;
+  figSize = screenExtent(1,3:4) - [0,120]; % consider only the first monitor
+
+  switch get_option(varargin,'figSize','','char')
+    case 'huge'
+      fac = 1;
+    case 'large'
+      fac = 0.8;
+    case {'normal','medium'}
+      fac = 0.5;
+    case 'small'
+      fac = 0.35;
+    case 'tiny'
+      fac =  0.25;
+    otherwise
+      fac = get_option(varargin,'figSize',mtexFig.figSizeFactor,'double');
+  end
+  figSize = figSize .* fac;
+  
+  n = numel(mtexFig.children);
+  if isappdata(mtexFig.children(1),'sphericalPlot') 
+    figSize = figSize .* min([1 1]./fac,0.75*[n/(1+(n>4)), (1 + (n>4))]);
+  elseif isappdata(mtexFig.children(1),'mapPlot')
+    figSize = figSize .* min([1 1]./fac,[mtexFig.nrows mtexFig.ncols]);
+  end
+ 
+  % try to compensate tight inset
+  figSize(1) = figSize(1) + sum(mtexFig.figTightInset([1,3])) + ...
+    mtexFig.ncols * sum(mtexFig.tightInset([1,3]));
+  figSize(2) = figSize(2) + sum(mtexFig.figTightInset([2,4])) + ...
+    mtexFig.nrows * sum(mtexFig.tightInset([2,4]));
+    
+else
+
+  position = get(mtexFig.parent,'Position'); 
+  figSize = position(3:4);
+  
+end
+
+figSize = figSize - sum(reshape(mtexFig.figTightInset,2,2),2).';
+
+% compute layout
+if check_option(varargin,'figSize') ||...
+    ~check_option(varargin,'keepAxisSize') || isempty(mtexFig.axisWidth)
+  [mtexFig.ncols,mtexFig.nrows] = calcPartition(mtexFig,figSize);
+  [mtexFig.axisWidth,mtexFig.axisHeight] = calcAxesSize(mtexFig,figSize);
+else
+  screenExtent = get(0,'MonitorPositions');
+end
+
+% resize figure
+if exist('screenExtent','var')
+  width = mtexFig.axesWidth;
+  height = mtexFig.axesHeight;
+  position = [(screenExtent(1,3)-width)/2,(screenExtent(1,4)-height)/2,width,height];
+end
+
+% draw layout
+mtexFig.parent.ResizeFcn = [];
+if mtexFig.parent.WindowStyle~="docked", mtexFig.parent.Position = position; end
+updateLayout(mtexFig);
+mtexFig.parent.ResizeFcn = @(src,evt) updateLayout(mtexFig);
+
+% update colorrange
+if check_option(varargin,'colorrange')
+  setColorRange(mtexFig,get_option(varargin,'colorrange'),varargin{:});
+end
+
+% update scale bars
+for i = 1:numel(mtexFig.children)
+  mP = getappdata(mtexFig.children(i),'mapPlot');
+  if ~isempty(mP), mP.micronBar.update; end  
+end
+
+% use antialiasing to generate a nice figure
+if check_option(varargin,'final') && getMTEXpref('generatingHelpMode')
+  myaa('publish')
+end
+
+end

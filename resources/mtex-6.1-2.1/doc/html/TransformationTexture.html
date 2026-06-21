@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Transformation Texture</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-09-12">
+<meta name="DC.source" content="script_TransformationTexture.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Transformation Texture</h1>
+<p>During phase transformation or twinning the orientation of a crystal rapidly flips from an initial state <tt>oriA</tt> into a transformed state <tt>oriB</tt>. This relationship between the initial and transformed state can be described by an orientation relationship <tt>OR</tt>. To make the situation more precise, we consider the phase transformation from austenite to ferrite via the Nishiyama Wassermann orientation relationship</p>
+<pre class="codeinput">
+<span class="comment">% parent and child crystal symmetry</span>csP=crystalSymmetry(<span class="string">'432'</span>,<span class="string">'mineral'</span>,<span class="string">'Austenite'</span>);csC=crystalSymmetry(<span class="string">'432'</span>,<span class="string">'mineral'</span>,<span class="string">'Ferrite'</span>);<span class="comment">% the orientation relationship</span>p2c=orientation.NishiyamaWassermann(csP,csC);
+</pre>
+<p>Now an arbitrary Austenite orientation</p>
+<pre class="codeinput">oriA=orientation.rand(csP)
+</pre>
+<pre class="codeoutput"> 
+oriA = orientation (Austenite &rarr; xyz)
+ 
+  Bunge Euler angles in degree
+     phi1     Phi    phi2
+  274.435 113.064 56.0748
+ 
+</pre>
+<p>is transformed in one of the following Ferrite orientations</p>
+<pre class="codeinput">oriB=variants(p2c,oriA)
+</pre>
+<pre class="codeoutput"> 
+oriB = orientation (Ferrite &rarr; xyz)
+  size: 1 x 12
+ 
+  Bunge Euler angles in degree
+     phi1     Phi    phi2
+  145.481  59.881 5.71133
+  74.9305 145.455  161.84
+  44.9093 44.0894 337.807
+  351.072 83.8033 294.737
+   244.74 77.6467 139.059
+  61.0766 26.8843 144.464
+  232.111 92.5367 320.153
+  126.935 99.9156 123.979
+  234.147 17.0251  217.13
+  109.801 110.235 299.474
+  9.24593 76.0876 111.531
+  142.555 40.5361 187.611
+ 
+</pre>
+<p>These 12 Ferrite orientations are called variants of the orientation relationship. Lets visualize them in a pole figure plot</p>
+<pre class="codeinput">hC=Miller({1,1,1},{1,1,0},csC);hP=Miller({1,1,0},{1,0,0},csP);<span class="comment">% plot the child variants</span>plotPDF(oriB,hC,<span class="string">'MarkerSize'</span>,5,<span class="string">'markerColor'</span>,<span class="string">'black'</span>,<span class="string">'figSize'</span>,<span class="string">'medium'</span>);<span class="comment">% and on top the parent orientation</span>opt={<span class="string">'MarkerFaceColor'</span>,<span class="string">'none'</span>,<span class="string">'MarkerEdgeColor'</span>,<span class="string">'darkred'</span>,<span class="string">'linewidth'</span>,3};<span class="keyword">for</span>k=1:2nextAxis(k)hold<span class="string">on</span>plot(oriA*hP(k).symmetrise,opt{:})xlabel(char(hP(k),<span class="string">'latex'</span>),<span class="string">'Color'</span>,<span class="string">'red'</span>,<span class="string">'Interpreter'</span>,<span class="string">'latex'</span>)hold<span class="string">off</span><span class="keyword">end</span>drawNow(gcm)
+</pre>
+<img vspace="50" hspace="5" src="TransformationTexture_01.png" alt=""> <p>In case we have multiple parent orientations following some initial orientation distribution function <tt>odf</tt>
+</p>
+<pre class="codeinput">
+<span class="comment">% define a model ODF</span>odfA=unimodalODF(oriA,<span class="string">'halfwidth'</span>,5*degree)plotPDF(odfA,hP,<span class="string">'figSize'</span>,<span class="string">'medium'</span>)mtexColorbar
+</pre>
+<pre class="codeoutput"> 
+odfA = SO3FunRBF (Austenite &rarr; xyz)
+ 
+  &lt;strong&gt;unimodal component&lt;/strong&gt;
+  kernel: de la Vallee Poussin, halfwidth 5&deg;
+  center: 1 orientations
+ 
+  Bunge Euler angles in degree
+     phi1     Phi    phi2  weight
+  274.435 113.064 56.0748       1
+ 
+</pre>
+<img vspace="50" hspace="5" src="TransformationTexture_02.png" alt=""> <p>We can draw some random orientations according this model ODF and apply the same commands <tt>variants</tt> to compute all transformed orientations in one step</p>
+<pre class="codeinput">
+<span class="comment">% number of discrete orientations</span>n=10000;oriASim=odfA.discreteSample(n)<span class="comment">% transform the orientations</span>oriBSim=variants(p2c,oriASim)<span class="comment">% show the result</span>plotPDF(oriBSim,hC,<span class="string">'contourf'</span>,<span class="string">'figSize'</span>,<span class="string">'medium'</span>);mtexColorbar
+</pre>
+<pre class="codeoutput"> 
+oriASim = orientation (Austenite &rarr; xyz)
+  size: 10000 x 1
+ 
+oriBSim = orientation (Ferrite &rarr; xyz)
+  size: 10000 x 12
+</pre>
+<img vspace="50" hspace="5" src="TransformationTexture_03.png" alt=""> <p>An alternative and better approach is to directly use <tt>odfA</tt> as an input to the function <a href="orientation.variants.html"><tt>variants</tt></a>. In this case the output is the orientation distribution function of the transformed material</p>
+<pre class="codeinput">
+<span class="comment">% compute the child ODF</span>odfB=variants(p2c,odfA)<span class="comment">% plot</span>plotPDF(odfB,hC,<span class="string">'contourf'</span>,<span class="string">'figSize'</span>,<span class="string">'medium'</span>);mtexColorbar
+</pre>
+<pre class="codeoutput"> 
+odfB = SO3FunHarmonic (Ferrite &rarr; xyz)
+  bandwidth: 48
+  weight: 1
+ 
+</pre>
+<img vspace="50" hspace="5" src="TransformationTexture_04.png" alt=""> <p>We observe that the transformed ODF computed by the latter approach is sharper and shows more details when compared with the ODF computed from discrete orientations. We may quantify this difference by computing the texture index of both ODFs</p>
+<pre class="codeinput">
+<span class="comment">% texture index of the transformed ODF computed from discrete orientations</span>odfBSim=calcDensity(oriBSim)norm(odfBSim)^2
+</pre>
+<pre class="codeoutput"> 
+odfBSim = SO3FunHarmonic (Ferrite &rarr; xyz)
+  bandwidth: 25
+  weight: 1
+ 
+ans =
+    3.4853
+</pre>
+<pre class="codeinput">
+<span class="comment">% texture index of the directly computed transformed ODF</span>norm(odfB)^2
+</pre>
+<pre class="codeoutput">ans =
+   17.4509
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Transformation Texture
+%
+% During phase transformation or twinning the orientation of a crystal
+% rapidly flips from an initial state |oriA| into a transformed state
+% |oriB|. This relationship between the initial and transformed state can
+% be described by an orientation relationship |OR|. To make the situation
+% more precise, we consider the phase transformation from austenite to
+% ferrite via the Nishiyama Wassermann orientation relationship
+
+% parent and child crystal symmetry
+csP = crystalSymmetry('432','mineral','Austenite');
+csC = crystalSymmetry('432','mineral','Ferrite');
+
+% the orientation relationship
+p2c = orientation.NishiyamaWassermann(csP,csC);
+
+%%
+% Now an arbitrary  Austenite orientation 
+
+oriA = orientation.rand(csP)
+
+%%
+% is transformed in one of the following Ferrite orientations
+
+oriB = variants(p2c,oriA)
+
+%%
+% These 12 Ferrite orientations are called variants of the orientation
+% relationship. Lets visualize them in a pole figure plot
+
+hC = Miller({1,1,1},{1,1,0},csC);
+hP = Miller({1,1,0},{1,0,0},csP);
+
+% plot the child variants
+plotPDF(oriB,hC,'MarkerSize',5,'markerColor','black','figSize','medium');
+
+% and on top the parent orientation
+opt = {'MarkerFaceColor','none','MarkerEdgeColor','darkred','linewidth',3};
+for k = 1:2
+  nextAxis(k)
+  hold on 
+  plot(oriA * hP(k).symmetrise ,opt{:})
+  xlabel(char(hP(k),'latex'),'Color','red','Interpreter','latex')
+  hold off
+end
+drawNow(gcm)
+
+%%
+% In case we have multiple parent orientations following some initial
+% orientation distribution function |odf|
+
+% define a model ODF
+odfA = unimodalODF(oriA,'halfwidth',5*degree)
+
+plotPDF(odfA,hP,'figSize','medium')
+mtexColorbar
+
+%%
+% We can draw some random orientations according this model ODF and apply
+% the same commands |variants| to compute all transformed orientations in
+% one step
+
+% number of discrete orientations
+n = 10000;
+oriASim = odfA.discreteSample(n)
+
+% transform the orientations
+oriBSim = variants(p2c,oriASim)
+
+% show the result
+plotPDF(oriBSim,hC,'contourf','figSize','medium');
+mtexColorbar
+
+%%
+% An alternative and better approach is to directly use |odfA| as an input
+% to the function <orientation.variants.html |variants|>. In this case the
+% output is the orientation distribution function of the transformed
+% material
+
+% compute the child ODF
+odfB = variants(p2c,odfA)
+
+% plot
+plotPDF(odfB,hC,'contourf','figSize','medium');
+mtexColorbar
+
+%%
+% We observe that the transformed ODF computed by the latter approach is
+% sharper and shows more details when compared with the ODF computed from
+% discrete orientations. We may quantify this difference by computing the
+% texture index of both ODFs
+
+% texture index of the transformed ODF computed from discrete orientations
+odfBSim = calcDensity(oriBSim)
+norm(odfBSim)^2
+
+%%
+
+% texture index of the directly computed transformed ODF 
+norm(odfB)^2
+
+##### SOURCE END #####
+-->
+</body>
+</html>

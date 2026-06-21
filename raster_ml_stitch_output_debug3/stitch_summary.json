@@ -1,0 +1,36 @@
+{
+  "tiles_folder": "/Users/johnjin/Documents/work/Models/EBSD stiching/Cropped",
+  "output_dir": "/Users/johnjin/Documents/work/Models/EBSD stiching/raster_ml_stitch_output_debug3",
+  "n_tiles": 8,
+  "n_pairs": 8,
+  "n_candidates": 78,
+  "n_accepted_seams": 6,
+  "ml_model": "logistic_regression_self_supervised",
+  "feature_columns": [
+    "iq_corr",
+    "ci_corr",
+    "valid_fraction",
+    "median_misorientation_deg",
+    "p90_misorientation_deg",
+    "shift_abs",
+    "classical_score"
+  ],
+  "selected_shift_summary": {
+    "median_iq_corr": 1.0,
+    "median_ci_corr": 1.0,
+    "median_misorientation_deg": 0.0,
+    "p90_misorientation_deg": 53.18141890811392,
+    "median_valid_fraction": 1.0,
+    "accepted_seam_fraction": 0.75
+  },
+  "ml_coefficients": {
+    "iq_corr": 0.6324745930478938,
+    "ci_corr": -0.43248551630374693,
+    "valid_fraction": 0.0,
+    "median_misorientation_deg": -1.6221597052055088,
+    "p90_misorientation_deg": -1.1246793279818825,
+    "shift_abs": -0.05158326204656252,
+    "classical_score": 1.5226250425637713
+  },
+  "ml_intercept": 1.4415581684354908
+}

@@ -1,0 +1,466 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Lankford parameter</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-09-12">
+<meta name="DC.source" content="script_Lankford.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Lankford parameter</h1>
+<!--introduction-->
+<p>The Lankford parameter, also referred to as the Lankford coefficient, the R-value or plastic strain ratio, is an important material property in the field of mechanical metallurgy, particularly in the study of sheet metal forming processes. It is often used to optimize manufacturing processes, especially in industries like automotive and aerospace, where sheet metal components are extensively utilized.</p>
+<p>The Lankford parameter quantifies the anisotropy of a material's plastic deformation behavior. It is the ratio of the true width strain to the true thickness strain at a particular value of length strain. This scalar quantity is used extensively as an indicator of formability.</p>
+<p>R-values can vary widely depending on the material and its processing history:</p>
+<div>
+<ul>
+<li>Materials with high R-values, typically ranging from ~1 to 2.5 or higher, exhibit a strong degree of anisotropy in their deformation behavior. This means they deform significantly more in one direction compared to perpendicular directions.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>Alternatively, materials with low R-values, typically close to zero or even slightly negative, exhibit more isotropic deformation characteristics such that they tend to deform relatively uniformly in all directions.</li>
+</ul>
+</div>
+<p>The R-value is highly relevant to forming operations:</p>
+<div>
+<ul>
+<li>Materials with high R-values are often preferred for forming processes. This is because they exhibit a strong tendency to elongate in one direction while constraining deformation in the perpendicular directions. This can lead to improved formability and allows for more complex shapes to be produced without causing defects like cracks or wrinkles.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>On the other hand, materials with low R-values may be less suitable for certain forming operations. Since they tend to be less anisotropic, it results in more uniform deformation but that in turn may limit the complexity of shapes that can be produced without defects.</li>
+</ul>
+</div>
+<p>Understanding the R-value of a material is crucial in sheet metal forming processes as it helps manufacturers select the right material for a specific application.</p>
+<p>For example, in the automotive industry, materials with high R-values are often chosen for parts like car body panels, where complex shapes are common.</p>
+<p>On the other hand, materials with lower R-values may be more suitable for applications where uniformity of deformation is critical. An example is the production of deep drawn parts, such as cylindrical containers or cans. In deep drawing, a flat sheet of metal is formed into a three-dimensional shape by being drawn into a die cavity. This process requires uniform deformation of the material to avoid wrinkles, or uneven thickness distribution (thinning) in areas around the drawn part. Consequently, materials with lower r-values, which exhibit more isotropic deformation behavior, are better suited for deep drawing applications since they are less likely to show preferential deformation in one direction. Instead, they are more likely to deform uniformly in all directions, ensuring a consistent shape is produced.</p>
+<p>To experimentally calculate the Lankford parameter, uniaxial tensile tests at different angles to the rolling direction are required. The R-value is then calculated as the ratio of the transverse strain (i.e. - perpendicular to the loading direction) to the axial strain (i.e. - along the loading direction).</p>
+<p>In the context of crystallography and electron backscattering diffraction (EBSD) analysis, understanding the Lankford parameter is crucial for predicting how a material will deform under different loading conditions.</p>
+<p>In terms of MATLAB and the MTEX toolbox, the the Lankford parameter or R-value is modelled or estimated on the basis of crystallographic orientations and the Taylor theory as demonstrated below.</p>
+<!--/introduction-->
+<h2 id="1">Example 1: The Lankford parameter (or R-value) of a single orientation</h2>
+<p>In this example, a single (1 1 0)[1 -1 2] Brass orientation is used.</p>
+<pre class="codeinput">
+<span class="comment">% define an fcc crystal system</span>CS=crystalSymmetry(<span class="string">'m-3m'</span>,[111],<span class="string">'mineral'</span>,<span class="string">'fcc'</span>);<span class="comment">% define the fcc slip system</span>sS=slipSystem.fcc(CS)<span class="comment">% use MTEX's pre-defined (1 1 0)[1 -1 2] Brass orientation</span>ori=orientation.brass(CS);<span class="comment">% compute the Lankford parameter</span>rho=linspace(0,1,11);[R,M,minM]=calcLankford(ori,sS,<span class="string">'verbose'</span>,<span class="string">'rho'</span>,rho);
+</pre>
+<pre class="codeoutput"> 
+sS = slipSystem (fcc)
+ 
+  u    v    w  | h    k    l CRSS
+  0    1   -1    1    1    1    1
+---
+M at 0&deg;  to tA = 1.841
+M at 45&deg; to tA = 1.7817
+M at 90&deg; to tA = 1.7509
+---
+R at 0&deg;  to tA = 1
+R at 45&deg; to tA = 1
+R at 90&deg; to tA = 2.3333
+---
+Rbar = 0.66667
+---
+</pre>
+<p>The summary results show that for the Brass orientation, it is not always possible to predict the R-value as Inf values are predicted at 45&deg; and 90&deg; to the nominal rolling direction (or in this case, x).</p>
+<p>The computed Taylor factor allows us to recreates Fig. 3.10 on page 74 of: [William F. Hosford, The mechanics of crystals and textured polycrystals] (<a href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/crat.2170290414">https://onlinelibrary.wiley.com/doi/epdf/10.1002/crat.2170290414</a>) It shows the dependence of <img src="Lankford_eq09319732146067371049.png" alt="$M$"> on $\rho = -d_{\epsilon}_Y / d_{\epsilon}_X = \frac{R}{1+R}$ for rolling and transverse direction tension tests for an ideal Brass orientation. In the rolling direction test, x = [1 -1 2], and in the transverse test x = [-1 1 1].</p>
+<pre class="error">Error updating Text.
+
+ String scalar or character vector must have valid interpreter syntax: 
+$\rho = -d_{\epsilon}_Y / d_{\epsilon}_X = \frac{R}{1+R}$
+</pre>
+<pre class="codeinput">plot(rho,M(:,[1,10,19]).',<span class="string">'-s'</span>,<span class="string">'lineWidth'</span>,2);xlabel(<span class="string">'{\rho} = -d{\epsilon}_Y / d{\epsilon}_X'</span>);ylabel(<span class="string">'Relative strength, M = {\sigma}_x / {\tau}'</span>);legend(<span class="string">'\theta=0^\circ'</span>,<span class="string">'\theta=45^\circ'</span>,<span class="string">'\theta=90^\circ'</span>,<span class="string">'Location'</span>,<span class="string">'northeast'</span>);
+</pre>
+<img vspace="50" hspace="5" src="Lankford_01.png" alt=""> <h2 id="3">Example 2: The Lankford parameters from an ODF</h2>
+<p>In the previous chapter we have assumed a perfectly Brass oriented texture. Lets next assume a slight deviation around the preferred orientation of about 10 degree modeled by the ODF</p>
+<pre class="codeinput">odf=unimodalODF(ori,<span class="string">'halfwidth'</span>,10*degree)
+</pre>
+<pre class="codeoutput"> 
+odf = SO3FunRBF (fcc &rarr; xyz)
+ 
+  &lt;strong&gt;unimodal component&lt;/strong&gt;
+  kernel: de la Vallee Poussin, halfwidth 10&deg;
+  center: 1 orientations
+ 
+  Bunge Euler angles in degree
+  phi1    Phi   phi2 weight
+    35     45      0      1
+ 
+</pre>
+<p>Performing, the Lankford factor analysis on the ODF results in</p>
+<pre class="codeinput">[R,M,minM]=calcLankford(odf,sS,<span class="string">'silent'</span>,<span class="string">'rho'</span>,rho);plot(rho,M(:,[1,10,19]).',<span class="string">'-s'</span>,<span class="string">'lineWidth'</span>,2);xlabel(<span class="string">'{\rho} = -d{\epsilon}_Y / d{\epsilon}_X'</span>);ylabel(<span class="string">'Relative strength, M = {\sigma}_x / {\tau}'</span>);legend(<span class="string">'\theta=0^\circ'</span>,<span class="string">'\theta=45^\circ'</span>,<span class="string">'\theta=90^\circ'</span>,<span class="string">'Location'</span>,<span class="string">'northeast'</span>);
+</pre>
+<img vspace="50" hspace="5" src="Lankford_02.png" alt=""> <h2 id="5">Example 3: The Lankford parameter of an EBSD map</h2>
+<p>In this demonstration an hcp titanium dataset is used</p>
+<pre class="codeinput">
+<span class="comment">% load an mtex ebsd map</span>mtexdata<span class="string">titanium</span><span class="comment">% define the crystal system</span>CS=ebsd.CS;<span class="comment">% reconstruct the grains</span>[grains,ebsd.grainId]=calcGrains(ebsd,<span class="string">'angle'</span>,5*degree);<span class="comment">% remove small grains</span>ebsd(grains(grains.grainSize&lt;=5))=[];<span class="comment">% recalculate the grains</span>[grains,ebsd.grainId]=calcGrains(ebsd,<span class="string">'angle'</span>,5*degree);<span class="comment">% plot the orientations</span>plot(ebsd,ebsd.orientations);hold<span class="string">all</span>plot(grains.boundary,<span class="string">'lineWidth'</span>,2);hold<span class="string">off</span>
+</pre>
+<pre class="codeoutput"> 
+ebsd = EBSD
+ 
+ Phase  Orientations           Mineral         Color  Symmetry  Crystal reference frame
+     0   8100 (100%)  Titanium (Alpha)  LightSkyBlue       622       X||a, Y||b*, Z||c*
+ 
+ &lt;strong&gt;Properties&lt;/strong&gt;: ci, grainid, iq, sem_signal
+ &lt;strong&gt;Scan unit&lt;/strong&gt; : um
+ &lt;strong&gt;X x Y x Z&lt;/strong&gt; : [0 996] x [0 998] x [0 0]
+ &lt;strong&gt;Normal vector&lt;/strong&gt;: (0,0,1)
+ 
+</pre>
+<img vspace="50" hspace="5" src="Lankford_03.png" alt=""> <h2 id="6">define the hcp slip systems</h2>
+<p>Since Taylor theory is used to compute the Lankford parameter, multiple slip systems and their corresponding critical resolved shear stresses <a href="slipSystem.index.html">slip systems</a> can be employed.</p>
+<pre class="codeinput">sS=[slipSystem.basal(CS,1),<span class="keyword">...</span>slipSystem.prismatic2A(CS,66),<span class="keyword">...</span>slipSystem.pyramidalCA(CS,80),<span class="keyword">...</span>slipSystem.twinC1(CS,100)]
+</pre>
+<pre class="codeoutput"> 
+sS = slipSystem (Titanium (Alpha))
+ size: 1 x 4
+ 
+   U    V    T    W  | H    K    I    L CRSS
+   1    1   -2    0    0    0    0    1    1
+   0    1   -1    0    2   -1   -1    0   66
+   2   -1   -1    3   -1    1    0    1   80
+  -1    1    0   -2   -1    1    0    1  100
+</pre>
+<h2 id="7">compute the Lankford parameter</h2>
+<p>The Lankford parameter is computed using the command <a href="calcLankford.html"><tt>calcLankford</tt></a>. It solely depends on the texture provided by the mean orientations of the grains, weighted by the area of the grains and the angle <img src="Lankford_eq05246873011375979495.png" alt="$\theta$"> between the tensile direction and the rolling direction. In the case of the latter, the default reference direction is <img src="Lankford_eq16247206711595679522.png" alt="$x$">.</p>
+<pre class="codeinput">theta=linspace(0,90*degree,19);[R,M,minM]=calcLankford(grains.meanOrientation,sS,theta,<span class="string">'weights'</span>,grains.grainSize,<span class="string">'verbose'</span>);
+</pre>
+<pre class="codeoutput">---
+M at 0&deg;  to tA = 1.7682
+M at 45&deg; to tA = 1.7585
+M at 90&deg; to tA = 1.9676
+---
+R at 0&deg;  to tA = 0.25
+R at 45&deg; to tA = 1
+R at 90&deg; to tA = 1
+---
+Rbar = -0.375
+---
+</pre>
+<p>The following plot shows the Lankford parameter, as a function of the angle <img src="Lankford_eq05246873011375979495.png" alt="$\theta$"> between the tensile direction and the notional rolling direction (in this case - x).</p>
+<pre class="codeinput">clfplot(theta./degree,R,<span class="string">'o-r'</span>,<span class="string">'lineWidth'</span>,1.5);xlabel(<span class="string">'Angle to tensile direction, {\theta} (in degrees)'</span>);ylabel(<span class="string">'R @ M_m_i_n, R = {\rho} / (1 - {\rho}) = -d{\epsilon}_Y / d{\epsilon}_Z'</span>);
+</pre>
+<img vspace="50" hspace="5" src="Lankford_04.png" alt=""> <p>Similarly, the next plot shows the Taylor factor as a function of the angle <img src="Lankford_eq05246873011375979495.png" alt="$\theta$"> between the tensile direction and the notional rolling direction (in this case - x).</p>
+<pre class="codeinput">plot(theta./degree,minM,<span class="string">'o-b'</span>,<span class="string">'lineWidth'</span>,1.5);xlabel(<span class="string">'Angle to tensile direction, {\theta} (in degrees)'</span>);ylabel(<span class="string">'Min. relative strength, min(M) = min({\sigma}_x / {\tau}min(M))'</span>);
+</pre>
+<img vspace="50" hspace="5" src="Lankford_05.png" alt=""> <p>The R-value can also be used to compute two additional values that are of importance to sheet metal operations:</p>
+<div>
+<ul>
+<li>The normal anisotropy ratio (Rbar, or Ravg, or rm) defines the ability of the metal to deform in the thickness direction relative to deformation in the plane of the sheet. For Rbar values &gt;= 1, the sheet metal resists thinning, improves cup drawing, hole expansion, and other forming modes where metal thinning is detrimental. For Rbar &lt; 1, thinning becomes the preferential metal flow direction, increasing the risk of failure in drawing operations.</li>
+</ul>
+</div>
+<pre class="codeinput">Rbar=0.5*(R(1)+R(19)+2*R(10))
+</pre>
+<pre class="codeoutput">Rbar =
+    1.6250
+</pre>
+<div>
+<ul>
+<li>A related parameter is the planar anisotropy parameter (deltaR) which is an indicator of the ability of a material to demonstrate non-earing behavior. A deltaR value = 0 is ideal for can-making or deep drawing of cylinders, as this indicates equal metal flow in all directions; thus eliminating the need to trim ears during subsequent processing.</li>
+</ul>
+</div>
+<pre class="codeinput">deltaR=0.5*(R(1)+R(19)-2*R(10))
+</pre>
+<pre class="codeoutput">deltaR =
+   -0.3750
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Lankford parameter
+%
+% The Lankford parameter, also referred to as the Lankford coefficient, the
+% R-value or plastic strain ratio, is an important material property in the
+% field of mechanical metallurgy, particularly in the study of sheet metal
+% forming processes. It is often used to optimize manufacturing processes,
+% especially in industries like automotive and aerospace, where sheet metal
+% components are extensively utilized.
+% 
+% The Lankford parameter quantifies the anisotropy of a material's plastic
+% deformation behavior. It is the ratio of the true width strain to the
+% true thickness strain at a particular value of length strain. This scalar
+% quantity is used extensively as an indicator of formability.
+% 
+% R-values can vary widely depending on the material and its processing
+% history:
+%
+% * Materials with high R-values, typically ranging from ~1 to 2.5 
+%   or higher, exhibit a strong degree of anisotropy in their deformation 
+%   behavior. This means they deform significantly more in one direction 
+%   compared to perpendicular directions. 
+%
+% * Alternatively, materials with low R-values, typically close to zero or 
+%   even slightly negative, exhibit more isotropic deformation 
+%   characteristics such that they tend to deform relatively uniformly in 
+%   all directions.
+%
+% The R-value is highly relevant to forming operations:
+%
+% * Materials with high R-values are often preferred for forming processes.
+%   This is because they exhibit a strong tendency to elongate in one 
+%   direction while constraining deformation in the perpendicular 
+%   directions. This can lead to improved formability and allows for more 
+%   complex shapes to be produced without causing defects like cracks or 
+%   wrinkles.
+%
+% * On the other hand, materials with low R-values may be less suitable for
+%   certain forming operations. Since they tend to be less anisotropic, it
+%   results in more uniform deformation but that in turn may limit the 
+%   complexity of shapes that can be produced without defects.
+%
+% Understanding the R-value of a material is crucial in sheet metal forming
+% processes as it helps manufacturers select the right material for a
+% specific application.
+% 
+% For example, in the automotive industry, materials with high R-values are 
+% often chosen for parts like car body panels, where complex shapes are 
+% common. 
+%
+% On the other hand, materials with lower R-values may be more suitable for
+% applications where uniformity of deformation is critical. An example is
+% the production of deep drawn parts, such as cylindrical containers or
+% cans. In deep drawing, a flat sheet of metal is formed into a
+% three-dimensional shape by being drawn into a die cavity. This process
+% requires uniform deformation of the material to avoid wrinkles, or uneven
+% thickness distribution (thinning) in areas around the drawn part.
+% Consequently, materials with lower r-values, which exhibit more isotropic
+% deformation behavior, are better suited for deep drawing applications
+% since they are less likely to show preferential deformation in one
+% direction. Instead, they are more likely to deform uniformly in all
+% directions, ensuring a consistent shape is produced.
+% 
+% To experimentally calculate the Lankford parameter, uniaxial tensile 
+% tests at different angles to the rolling direction are required. The 
+% R-value is then calculated as the ratio of the transverse strain 
+% (i.e. - perpendicular to the loading direction) to the axial strain 
+% (i.e. - along the loading direction).
+%
+% In the context of crystallography and electron backscattering diffraction
+% (EBSD) analysis, understanding the Lankford parameter is crucial for 
+% predicting how a material will deform under different loading conditions. 
+% 
+% In terms of MATLAB and the MTEX toolbox, the the Lankford parameter or 
+% R-value is modelled or estimated on the basis of crystallographic 
+% orientations and the Taylor theory as demonstrated below.
+
+%% Example 1: The Lankford parameter (or R-value) of a single orientation
+%
+% In this example, a single (1 1 0)[1 -1 2] Brass orientation is used.
+
+% define an fcc crystal system
+CS = crystalSymmetry('m-3m', [1 1 1], 'mineral', 'fcc');
+
+% define the fcc slip system
+sS = slipSystem.fcc(CS)
+
+% use MTEX's pre-defined (1 1 0)[1 -1 2] Brass orientation
+ori = orientation.brass(CS);
+
+% compute the Lankford parameter
+rho = linspace(0,1,11);
+[R, M, minM] = calcLankford(ori,sS,'verbose','rho',rho);
+
+%%
+% The summary results show that for the Brass orientation, it is not always
+% possible to predict the R-value as Inf values are predicted at 45° and 
+% 90° to the nominal rolling direction (or in this case, x). 
+%
+% The computed Taylor factor allows us to recreates Fig. 3.10 on page 74
+% of: [William F. Hosford, The mechanics of crystals and textured
+% polycrystals]
+% (https://onlinelibrary.wiley.com/doi/epdf/10.1002/crat.2170290414) It
+% shows the dependence of $M$ on $\rho = -d_{\epsilon}_Y / d_{\epsilon}_X =
+% \frac{R}{1+R}$ for rolling and transverse direction tension tests for an
+% ideal Brass orientation. In the rolling direction test, x = [1 -1 2], and
+% in the transverse test x = [-1 1 1].
+
+
+plot(rho, M(:,[1,10,19]).','-s','lineWidth',2);
+xlabel('{\rho} = -d{\epsilon}_Y / d{\epsilon}_X');
+ylabel('Relative strength, M = {\sigma}_x / {\tau}');
+legend('\theta=0^\circ','\theta=45^\circ','\theta=90^\circ','Location','northeast');
+
+%% Example 2: The Lankford parameters from an ODF
+%
+% In the previous chapter we have assumed a perfectly Brass oriented
+% texture. Lets next assume a slight deviation around the preferred
+% orientation of about 10 degree modeled by the ODF
+
+odf = unimodalODF(ori,'halfwidth',10*degree)
+
+%%
+% Performing, the Lankford factor analysis on the ODF results in  
+
+[R, M, minM] = calcLankford(odf,sS,'silent','rho',rho);
+
+plot(rho, M(:,[1,10,19]).','-s','lineWidth',2);
+xlabel('{\rho} = -d{\epsilon}_Y / d{\epsilon}_X');
+ylabel('Relative strength, M = {\sigma}_x / {\tau}');
+legend('\theta=0^\circ','\theta=45^\circ','\theta=90^\circ','Location','northeast');
+
+
+%% Example 3: The Lankford parameter of an EBSD map
+% In this demonstration an hcp titanium dataset is used
+
+% load an mtex ebsd map
+mtexdata titanium
+
+% define the crystal system
+CS = ebsd.CS;
+
+% reconstruct the grains
+[grains,ebsd.grainId] = calcGrains(ebsd,'angle',5*degree);
+
+% remove small grains
+ebsd(grains(grains.grainSize <= 5)) = [];
+
+% recalculate the grains
+[grains,ebsd.grainId] = calcGrains(ebsd,'angle',5*degree);
+
+% plot the orientations
+plot(ebsd,ebsd.orientations);
+hold all
+plot(grains.boundary,'lineWidth',2);
+hold off
+
+%% define the hcp slip systems
+% Since Taylor theory is used to compute the Lankford parameter, multiple
+% slip systems and their corresponding critical resolved shear stresses
+% <slipSystem.index.html slip systems> can be employed.
+
+sS = [slipSystem.basal(CS,1),...
+  slipSystem.prismatic2A(CS,66),...
+  slipSystem.pyramidalCA(CS,80),...
+  slipSystem.twinC1(CS,100)]
+
+%% compute the Lankford parameter
+% The Lankford parameter is computed using the command <calcLankford.html
+% |calcLankford|>. It solely depends on the texture provided by the mean
+% orientations of the grains, weighted by the area of the grains and the
+% angle $\theta$ between the tensile direction and the rolling direction.
+% In the case of the latter, the default reference direction is $x$.
+
+theta = linspace(0,90*degree,19);
+[R, M, minM] = calcLankford(grains.meanOrientation,sS,theta,'weights',grains.grainSize,'verbose');
+
+%%
+% The following plot shows the Lankford parameter, as a function
+% of the angle $\theta$ between the tensile direction and the notional 
+% rolling direction (in this case - x).
+
+clf
+plot(theta ./ degree,R,'o-r','lineWidth',1.5);
+xlabel('Angle to tensile direction, {\theta} (in degrees)');
+ylabel('R @ M_m_i_n, R = {\rho} / (1 - {\rho}) = -d{\epsilon}_Y / d{\epsilon}_Z');
+
+%%
+% Similarly, the next plot shows the Taylor factor as a function of the 
+% angle $\theta$ between the tensile direction and the notional 
+% rolling direction (in this case - x).
+
+plot(theta ./ degree,minM,'o-b','lineWidth',1.5);
+xlabel('Angle to tensile direction, {\theta} (in degrees)');
+ylabel('Min. relative strength, min(M) = min({\sigma}_x / {\tau}min(M))');
+
+%%
+% The R-value can also be used to compute two additional values that are of
+% importance to sheet metal operations:
+%
+% * The normal anisotropy ratio (Rbar, or Ravg, or rm) defines the ability 
+%   of the metal to deform in the thickness direction relative to 
+%   deformation in the plane of the sheet. For Rbar values >= 1, the sheet 
+%   metal resists thinning, improves cup drawing, hole expansion, and other
+%   forming modes where metal thinning is detrimental. For Rbar < 1, 
+%   thinning becomes the preferential metal flow direction, increasing the 
+%   risk of failure in drawing operations.
+
+Rbar = 0.5 * (R(1) + R(19) + 2*R(10))
+
+%%
+% * A related parameter is the planar anisotropy parameter (deltaR) which 
+%   is an indicator of the ability of a material to demonstrate non-earing
+%   behavior. A deltaR value = 0 is ideal for can-making or deep drawing of
+%   cylinders, as this indicates equal metal flow in all directions; thus
+%   eliminating the need to trim ears during subsequent processing.
+
+deltaR = 0.5 * (R(1) + R(19) - 2*R(10))
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>

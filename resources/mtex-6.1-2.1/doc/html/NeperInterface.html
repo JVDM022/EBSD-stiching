@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Neper</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-09-12">
+<meta name="DC.source" content="script_NeperInterface.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Neper</h1>
+<!--introduction-->
+<!--/introduction-->
+<h2 id="1">General</h2>
+<p>Neper is an open source software package for polycrystal generation and meshing developed by Romain Quey. It can be obtained from <a href="https://neper.info">https://neper.info</a>, where also the documentation is located.</p>
+<p>This module provides an comfortable interface to Neper. It is used to simulate microstructures with certain parameters and load them back into MTEX for analysis and further investigation with the various tools provided by MTEX.</p>
+<p>In order to do this, a slicing of the 3-dimensional tessellation is necessary after the simulation. The obtained 2-dimensional tessellation is processed as an object from the class <tt>grain2d</tt>.</p>
+<h2 id="2">Setting-up the Neper instance</h2>
+<p>If you do not want to make any further adjustments to the default values, this step could be done very easily. In this case please skip to chapter "Simulating a microstructure with Neper"</p>
+<pre class="codeinput">job=neperInstance
+</pre>
+<pre class="codeoutput">job = 
+  neperInstance with properties:
+
+              id: 1
+        cubeSize: [1 1 1]
+          morpho: 'graingrowth'
+         iterMax: 1000
+    varNeperopts: []
+      fileName2d: '2dslice'
+      fileName3d: 'allgrains'
+        filePath: '/tmp/neper/'
+</pre>
+<p>File options: By default your Neper will work under the temporary folder of your MATLAB (MATLAB command <tt>tempdir</tt>). If you want to do your tessellations elsewhere or your tessellations are already located under another path, you can change it:</p>
+<pre class="codeinput">
+<span class="comment">% for example</span><span class="comment">% job.filePath = 'C:\Users\user\Documents\work\MtexWork\neper';</span><span class="comment">% or</span>job.filePath=[mtexDataPathfilesep<span class="string">'Neper'</span>];
+</pre>
+<p>By default the 3d tesselation data will be named "allgrains" with the endings .tess and .ori and the 2d slices will be named "2dslice" with the ending .tess and .ori . You can change the file names in variables <tt>fileName3d</tt> and <tt>fileName2d</tt>.</p>
+<pre class="codeinput">job.fileName3d=<span class="string">'my100grains'</span>;job.fileName2d=<span class="string">'my100GrSlice'</span>;
+</pre>
+<h2 id="5">Tessellation options</h2>
+<p>The grains will be generated in cubic domain. By default the domain has the edge length 1 in each direction. To change the size of the domain, store a row vector with 3 entries (x,y,z) in the variable <tt>cubeSize</tt>.</p>
+<pre class="codeinput">job.cubeSize=[442];
+</pre>
+<p>Neper uses an id to identify the tessellation. This integer value "is used as seed of the random number generator to compute the (initial) seed positions" (neper.info/doc/neper_t.html#cmdoption-id) By default the tessellation id is always <tt>1</tt>.</p>
+<pre class="codeinput">job.id=529;
+</pre>
+<p>Neper allows to specify the morphological properties of the cells. See <a href="https://neper.info/doc/neper_t.html#cmdoption-morpho">https://neper.info/doc/neper_t.html#cmdoption-morpho</a> for more information. By default grain growth is used, that is an alias for:</p>
+<pre class="codeinput">job.morpho=<span class="string">'diameq:lognormal(1,0.35),1-sphericity:lognormal(0.145,0.03)'</span>;
+</pre>
+<h2 id="8">Simulating a microstructure with Neper</h2>
+<p>The tessellation is executed by the command <tt>simulateGrains</tt>. There are two option to call it.</p>
+<div>
+<ol>
+<li>by an <a href="ODFTheory.html">ODF</a> and the number of grains</li>
+<li>by a list of orientations. In this case the length of the list determines the number of grains.</li>
+</ol>
+</div>
+<pre class="codeinput">cs=crystalSymmetry(<span class="string">'432'</span>);ori=orientation.rand(cs);odf=unimodalODF(ori);numGrains=100;grains=job.simulateGrains(odf,numGrains,<span class="string">'silent'</span>)
+</pre>
+<pre class="codeoutput"> 
+grains = grain3d
+ 
+ Phase  Grains  Volume  Mineral  Symmetry  Crystal reference frame
+     2     100      32                432                         
+ 
+ boundary faces: 643
+ 
+ &lt;strong&gt;Properties&lt;/strong&gt;: meanRotation
+ 
+</pre>
+<h2 id="9">plot the grains</h2>
+<pre class="codeinput">plot(grains,grains.meanOrientation)how2plot=plottingConvention;how2plot.outOfScreen=vector3d(-10,-5,2);how2plot.east=vector3d(1,-2,0);setCamera(how2plot)
+</pre>
+<img vspace="50" hspace="5" src="NeperInterface_01.png" alt=""> <h2 id="10">Slicing</h2>
+<p>To get slices of your tessellation, that you can process with MTEX, the command <tt>getSlice</tt> is used, which returns a set of grains (<tt>grain2d</tt>). It is called by giving the normal vector [a,b,c] of the plane and either a point that lies in the plane or the "d" of the plane equation. Please consider that the slicing must align with the size of the domain/cube (see Tessellation options - cubeSize)</p>
+<pre class="codeinput">
+<span class="comment">% the normals of the slices</span>N=[vector3d(0,0,1),vector3d(1,-1,0),vector3d(2,2,4)];<span class="comment">% make all slices passing through this point</span>A=vector3d(2,2,1);grains001=job.getSlice(N(1),A,<span class="string">'silent'</span>);grains1_10=job.getSlice(N(2),A,<span class="string">'silent'</span>);grains224=job.getSlice(N(3),A,<span class="string">'silent'</span>);
+</pre>
+<p>the resulting slices are grain maps which we can visualize in 3d</p>
+<pre class="codeinput">plot(grains001,grains001.meanOrientation);hold<span class="string">on</span>plot(grains1_10,grains1_10.meanOrientation);hold<span class="string">on</span>plot(grains224,grains224.meanOrientation);<span class="comment">% set camera</span>setCamera(how2plot)
+</pre>
+<pre class="codeoutput">Warning: still can not concatenate grains on different slices 
+Warning: still can not concatenate grains on different slices 
+</pre>
+<img vspace="50" hspace="5" src="NeperInterface_02.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Neper
+%
+%% General
+% Neper is an open source software package for polycrystal generation and
+% meshing developed by Romain Quey. It can be obtained from
+% https://neper.info, where also the documentation is located.
+%
+% This module provides an comfortable interface to Neper. It is used 
+% to simulate microstructures with certain parameters and load them back
+% into MTEX for analysis and further investigation with the various tools 
+% provided by MTEX.
+%
+% In order to do this, a slicing of the 3-dimensional tessellation is 
+% necessary after the simulation. The obtained 2-dimensional tessellation 
+% is processed as an object from the class |grain2d|. 
+%
+%
+%% Setting-up the Neper instance
+% If you do not want to make any further adjustments to the default values,
+% this step could be done very easily. In this case please skip to chapter
+% "Simulating a microstructure with Neper"
+
+job = neperInstance
+
+%% 
+% File options:
+% By default your Neper will work under the temporary folder of your MATLAB
+% (MATLAB command |tempdir|). If you want to do your tessellations elsewhere or
+% your tessellations are already located under another path, you can change
+% it:
+
+% for example
+% job.filePath = 'C:\Users\user\Documents\work\MtexWork\neper';
+% or
+ job.filePath = [mtexDataPath filesep 'Neper'];
+
+%%
+% By default the 3d tesselation data will be named "allgrains" with the
+% endings .tess and .ori and the 2d slices will be named "2dslice" with the
+% ending .tess and .ori . You can change the file names in variables
+% |fileName3d| and |fileName2d|.
+
+job.fileName3d = 'my100grains';
+job.fileName2d = 'my100GrSlice';
+
+%% Tessellation options
+% The grains will be generated in cubic domain. By default the domain has
+% the edge length 1 in each direction. To change the size of the domain,
+% store a row vector with 3 entries (x,y,z) in the variable |cubeSize|.
+
+job.cubeSize = [4 4 2];
+
+%%
+% Neper uses an id to identify the tessellation. This integer value "is
+% used as seed of the random number generator to compute the (initial) 
+% seed positions" (neper.info/doc/neper_t.html#cmdoption-id) By default the
+% tessellation id is always |1|.
+
+job.id = 529;
+
+%%
+% Neper allows to specify the morphological properties of the cells. See
+% <https://neper.info/doc/neper_t.html#cmdoption-morpho> for more
+% information. By default grain growth is used, that is an alias for:
+
+job.morpho = 'diameq:lognormal(1,0.35),1-sphericity:lognormal(0.145,0.03)';
+
+%% Simulating a microstructure with Neper
+%
+% The tessellation is executed by the command |simulateGrains|. There are
+% two option to call it.
+%
+% # by an <ODFTheory.html ODF> and the number of grains
+% # by a list of orientations. In this case the length of the list
+% determines the number of grains.
+%
+
+cs = crystalSymmetry('432');
+ori = orientation.rand(cs);
+odf = unimodalODF(ori);
+numGrains=100;
+
+grains = job.simulateGrains(odf,numGrains,'silent')
+
+%% plot the grains
+
+plot(grains,grains.meanOrientation)
+
+how2plot = plottingConvention;
+how2plot.outOfScreen = vector3d(-10,-5,2);
+how2plot.east = vector3d(1,-2,0);
+setCamera(how2plot)
+
+
+
+%% Slicing
+% To get slices of your tessellation, that you can process with MTEX, the
+% command |getSlice| is used, which returns a set of grains (|grain2d|). 
+% It is called by giving the normal vector [a,b,c] of the plane and either 
+% a point that lies in the plane or the "d" of the plane equation. Please
+% consider that the slicing must align with the size of the domain/cube
+% (see Tessellation options - cubeSize)
+
+% the normals of the slices
+N = [vector3d(0,0,1),vector3d(1,-1,0),vector3d(2,2,4)];
+
+% make all slices passing through this point
+A=vector3d(2,2,1);
+
+grains001 = job.getSlice(N(1),A,'silent');
+grains1_10= job.getSlice(N(2),A,'silent');
+grains224 = job.getSlice(N(3),A,'silent');
+
+%%
+% the resulting slices are grain maps which we can visualize in 3d
+
+plot(grains001,grains001.meanOrientation);
+hold on
+plot(grains1_10,grains1_10.meanOrientation);
+hold on
+plot(grains224,grains224.meanOrientation);
+
+% set camera
+setCamera(how2plot)
+
+##### SOURCE END #####
+-->
+</body>
+</html>
