@@ -24,7 +24,7 @@
       "p90_misorientation_deg": 0.0,
       "median_iq_corr": 1.0,
       "median_ci_corr": 1.0,
-      "median_final_score": 0.999999999912427
+      "median_final_score": 0.9999999999124268
     }
   ],
   "score_metrics": {
@@ -75,7 +75,7 @@
     }
   },
   "calibration": {
-    "ECE": 0.07435468540272257
+    "ECE": 0.07435468540533238
   },
   "placement_residuals": {
     "n_edges": 135,

@@ -1,6 +1,6 @@
 {
-  "tiles_folder": "/Users/johnjin/Documents/work/Models/EBSD stiching/Cropped",
-  "output_dir": "/Users/johnjin/Documents/work/Models/EBSD stiching/raster_ml_stitch_output",
+  "tiles_folder": "C:\\Users\\zhihanjin\\Downloads\\EBSD-stiching\\Cropped",
+  "output_dir": "C:\\Users\\zhihanjin\\Downloads\\EBSD-stiching\\raster_ml_stitch_output",
   "n_tiles": 78,
   "n_pairs": 137,
   "n_candidates": 1287,
@@ -30,7 +30,7 @@
       "negatives": 17,
       "roc_auc": 1.0,
       "pr_auc": 1.0,
-      "mean_probability": 0.9679138077017945
+      "mean_probability": 0.9679138076979866
     },
     "validation": {
       "n": 381,
@@ -38,7 +38,7 @@
       "negatives": 12,
       "roc_auc": 0.9997741644083107,
       "pr_auc": 0.9999926756024315,
-      "mean_probability": 0.9552875798763569
+      "mean_probability": 0.9552875798719187
     }
   },
   "selected_shift_summary": {
@@ -50,13 +50,13 @@
     "accepted_seam_fraction": 0.9854014598540146
   },
   "ml_coefficients": {
-    "iq_corr": 3.4099169391444075,
-    "ci_corr": -0.741076885544089,
-    "valid_fraction": -0.2092256363364639,
-    "median_misorientation_deg": -1.6713949669392831,
-    "p90_misorientation_deg": -1.399033962918323,
-    "shift_abs": -0.09026994341649361,
-    "classical_score": 2.2466644808764427
+    "iq_corr": 3.4099169385182777,
+    "ci_corr": -0.7410768854333344,
+    "valid_fraction": -0.2092256368105751,
+    "median_misorientation_deg": -1.67139496657602,
+    "p90_misorientation_deg": -1.399033963773899,
+    "shift_abs": -0.09026994296895863,
+    "classical_score": 2.246664480324622
   },
-  "ml_intercept": 10.883062300072583
+  "ml_intercept": 10.883062298866006
 }
