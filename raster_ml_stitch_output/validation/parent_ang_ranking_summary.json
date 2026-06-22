@@ -1,0 +1,45 @@
+{
+  "metric_type": "parent ANG top-1 selected shift and ranking validation",
+  "score_column": "final_score",
+  "n_pairs": 137,
+  "selected_top1_accuracy": 1.0,
+  "best_score_top1_accuracy": 1.0,
+  "mean_abs_selected_y_error_px": 0.0,
+  "mean_abs_selected_x_error_px": 0.0,
+  "max_abs_selected_y_error_px": 0.0,
+  "max_abs_selected_x_error_px": 0.0,
+  "mean_true_rank": 1.0,
+  "median_true_rank": 1.0,
+  "mean_reciprocal_rank": 1.0,
+  "mean_true_minus_best_false_margin": 0.06008947181333856,
+  "min_true_minus_best_false_margin": 0.02302018306963305,
+  "accepted_parent_correct": 135,
+  "rejected_parent_correct": 2,
+  "direction_summary": [
+    {
+      "direction": "horizontal",
+      "n_pairs": 65,
+      "selected_correct": 65,
+      "mean_abs_y_error_px": 0.0,
+      "mean_abs_x_error_px": 0.0,
+      "max_linf_error_px": 0,
+      "accepted": 64,
+      "selected_accuracy": 1.0
+    },
+    {
+      "direction": "vertical",
+      "n_pairs": 72,
+      "selected_correct": 72,
+      "mean_abs_y_error_px": 0.0,
+      "mean_abs_x_error_px": 0.0,
+      "max_linf_error_px": 0,
+      "accepted": 71,
+      "selected_accuracy": 1.0
+    }
+  ],
+  "note": "Use these metrics as the main parent-ground-truth validation. Candidate threshold confusion is secondary and can overcount near-shift false positives.",
+  "top1_true_shift_accuracy": 1.0,
+  "top2_true_shift_accuracy": 1.0,
+  "top3_true_shift_accuracy": 1.0,
+  "top5_true_shift_accuracy": 1.0
+}
