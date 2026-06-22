@@ -37,7 +37,7 @@
       "selected_accuracy": 1.0
     }
   ],
-  "note": "Use these metrics as the main parent-ground-truth validation. Candidate threshold confusion is secondary and can overcount near-shift false positives.",
+  "note": "Use these metrics as the parent-ground-truth validation. This notebook intentionally omits candidate-level parent confusion because stitching is a top-1 selection/ranking task.",
   "top1_true_shift_accuracy": 1.0,
   "top2_true_shift_accuracy": 1.0,
   "top3_true_shift_accuracy": 1.0,
