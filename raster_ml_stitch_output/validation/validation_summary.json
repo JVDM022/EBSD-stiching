@@ -13,7 +13,7 @@
       "p90_misorientation_deg": 0.0,
       "median_iq_corr": 1.0,
       "median_ci_corr": 1.0,
-      "median_final_score": 0.9999999999715252
+      "median_final_score": 0.999999999912427
     },
     {
       "direction": "vertical",
@@ -24,7 +24,7 @@
       "p90_misorientation_deg": 0.0,
       "median_iq_corr": 1.0,
       "median_ci_corr": 1.0,
-      "median_final_score": 0.9999999999715252
+      "median_final_score": 0.999999999912427
     }
   ],
   "score_metrics": {
@@ -45,37 +45,37 @@
     },
     "ml_probability": {
       "threshold": 0.65,
-      "accuracy": 0.9891219891219891,
+      "accuracy": 0.986013986013986,
       "precision": 1.0,
-      "recall": 0.9888712241653418,
-      "f1": 0.9944044764188649,
-      "TP": 1244.0,
+      "recall": 0.985691573926868,
+      "f1": 0.9927942353883107,
+      "TP": 1240.0,
       "FP": 0.0,
       "TN": 29.0,
-      "FN": 14.0,
+      "FN": 18.0,
       "false_accept_rate": 0.0,
-      "missed_accept_rate": 0.011128775834658187,
-      "roc_auc": 0.9999451784441642,
-      "pr_auc": 0.9999987382340323
+      "missed_accept_rate": 0.014308426073131956,
+      "roc_auc": 0.9999451784441643,
+      "pr_auc": 0.9999987367299403
     },
     "final_score": {
       "threshold": 0.65,
-      "accuracy": 0.98989898989899,
+      "accuracy": 0.986013986013986,
       "precision": 1.0,
-      "recall": 0.9896661367249603,
-      "f1": 0.9948062325209748,
-      "TP": 1245.0,
+      "recall": 0.985691573926868,
+      "f1": 0.9927942353883107,
+      "TP": 1240.0,
       "FP": 0.0,
       "TN": 29.0,
-      "FN": 13.0,
+      "FN": 18.0,
       "false_accept_rate": 0.0,
-      "missed_accept_rate": 0.010333863275039745,
-      "roc_auc": 0.9999451784441642,
-      "pr_auc": 0.9999987382340323
+      "missed_accept_rate": 0.014308426073131956,
+      "roc_auc": 0.9999177676662463,
+      "pr_auc": 0.999998106348055
     }
   },
   "calibration": {
-    "ECE": 0.07489420291157647
+    "ECE": 0.07435468540272257
   },
   "placement_residuals": {
     "n_edges": 135,
