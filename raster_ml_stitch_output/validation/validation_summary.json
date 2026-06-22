@@ -94,7 +94,7 @@
     "max_abs_origin_dy_error_px": 0.0
   },
   "parent_ang_ground_truth": {
-    "parent_ang": "EBSD stiching dev dataset/5%coldrolled_30min_975C_65mag2.ang",
+    "parent_ang": "EBSD stiching dev dataset\\5%coldrolled_30min_975C_65mag2.ang",
     "tiles_folder": "Cropped",
     "source": "direct tile coordinates compared against parent ANG grid spacing",
     "tolerance_px": 0,
