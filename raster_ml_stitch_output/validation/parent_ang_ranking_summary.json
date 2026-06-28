@@ -11,10 +11,10 @@
   "mean_true_rank": 1.0,
   "median_true_rank": 1.0,
   "mean_reciprocal_rank": 1.0,
-  "mean_true_minus_best_false_margin": 0.06008947181333856,
-  "min_true_minus_best_false_margin": 0.02302018306963305,
-  "accepted_parent_correct": 135,
-  "rejected_parent_correct": 2,
+  "mean_true_minus_best_false_margin": 0.06003076708812224,
+  "min_true_minus_best_false_margin": 0.023020171875339224,
+  "accepted_parent_correct": 137,
+  "rejected_parent_correct": 0,
   "direction_summary": [
     {
       "direction": "horizontal",
@@ -23,7 +23,7 @@
       "mean_abs_y_error_px": 0.0,
       "mean_abs_x_error_px": 0.0,
       "max_linf_error_px": 0,
-      "accepted": 64,
+      "accepted": 65,
       "selected_accuracy": 1.0
     },
     {
@@ -33,7 +33,7 @@
       "mean_abs_y_error_px": 0.0,
       "mean_abs_x_error_px": 0.0,
       "max_linf_error_px": 0,
-      "accepted": 71,
+      "accepted": 72,
       "selected_accuracy": 1.0
     }
   ],

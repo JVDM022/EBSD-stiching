@@ -1,0 +1,16 @@
+{
+  "stitched_ang": "raster_ml_stitch_output/stitched_map.ang",
+  "parent_ang": "EBSD stiching dev dataset/5%coldrolled_30min_975C_65mag2.ang",
+  "stitched_points": 739148,
+  "parent_points": 739148,
+  "compared_points": 739148,
+  "indexed_overlap_points": 739147,
+  "phase_match_fraction": 1.0,
+  "mean_misorientation_deg": 1.8050649285197128e-07,
+  "p95_misorientation_deg": 1.2074182697257333e-06,
+  "max_misorientation_deg": 2.091309789151873e-06,
+  "orientation_match_fraction_0_1deg": 1.0,
+  "mean_abs_iq_error": 0.0,
+  "mean_abs_ci_error": 0.0,
+  "max_coordinate_error": 4.760000001624576e-05
+}

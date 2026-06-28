@@ -1,100 +1,100 @@
 {
   "n_candidates": 1287,
   "n_selected_pairs": 137,
-  "n_accepted_seams": 135,
-  "accepted_seam_fraction": 0.9854014598540146,
+  "n_accepted_seams": 137,
+  "accepted_seam_fraction": 1.0,
   "direction_summary": [
     {
       "direction": "horizontal",
       "n_pairs": 65,
-      "accepted": 64,
+      "accepted": 65,
       "median_misorientation_deg": 0.0,
       "p90_misorientation_deg": 1.2074182697257331e-06,
       "median_iq_corr": 1.0,
       "median_ci_corr": 1.0,
-      "median_final_score": 0.999999999912427,
-      "acceptance_rate": 0.9846153846153847
+      "median_final_score": 0.9999999999999772,
+      "acceptance_rate": 1.0
     },
     {
       "direction": "vertical",
       "n_pairs": 72,
-      "accepted": 71,
+      "accepted": 72,
       "median_misorientation_deg": 0.0,
       "p90_misorientation_deg": 1.2074182697257331e-06,
       "median_iq_corr": 1.0,
       "median_ci_corr": 1.0,
-      "median_final_score": 0.9999999999124268,
-      "acceptance_rate": 0.9861111111111112
+      "median_final_score": 0.9999999999999772,
+      "acceptance_rate": 1.0
     }
   ],
   "score_metrics": {
     "classical_score": {
       "threshold": 0.65,
-      "accuracy": 0.9945609945609946,
-      "precision": 0.9960348929421095,
-      "recall": 0.9984101748807631,
-      "f1": 0.9972211194918619,
-      "TP": 1256,
-      "FP": 5,
-      "TN": 24,
+      "accuracy": 0.9953379953379954,
+      "precision": 0.9968774395003903,
+      "recall": 0.9984362783424551,
+      "f1": 0.99765625,
+      "TP": 1277,
+      "FP": 4,
+      "TN": 4,
       "FN": 2,
-      "false_accept_rate": 0.1724137931034483,
-      "missed_accept_rate": 0.001589825119236884,
-      "roc_auc": 0.9993421413299709,
-      "pr_auc": 0.9999848827024538
+      "false_accept_rate": 0.5,
+      "missed_accept_rate": 0.001563721657544957,
+      "roc_auc": 0.9978498827208757,
+      "pr_auc": 0.9999865850420787
     },
     "ml_probability": {
       "threshold": 0.65,
-      "accuracy": 0.986013986013986,
+      "accuracy": 0.9836829836829837,
       "precision": 1.0,
-      "recall": 0.985691573926868,
-      "f1": 0.9927942353883107,
-      "TP": 1240,
+      "recall": 0.983580922595778,
+      "f1": 0.991722506897911,
+      "TP": 1258,
       "FP": 0,
-      "TN": 29,
-      "FN": 18,
+      "TN": 8,
+      "FN": 21,
       "false_accept_rate": 0.0,
-      "missed_accept_rate": 0.014308426073131956,
-      "roc_auc": 0.9999451784441643,
-      "pr_auc": 0.9999987367299403
+      "missed_accept_rate": 0.01641907740422205,
+      "roc_auc": 0.9995113369820172,
+      "pr_auc": 0.999996941072824
     },
     "final_score": {
       "threshold": 0.65,
-      "accuracy": 0.986013986013986,
+      "accuracy": 0.9852369852369852,
       "precision": 1.0,
-      "recall": 0.985691573926868,
-      "f1": 0.9927942353883107,
-      "TP": 1240,
+      "recall": 0.9851446442533229,
+      "f1": 0.9925167388735723,
+      "TP": 1260,
       "FP": 0,
-      "TN": 29,
-      "FN": 18,
+      "TN": 8,
+      "FN": 19,
       "false_accept_rate": 0.0,
-      "missed_accept_rate": 0.014308426073131956,
-      "roc_auc": 0.9999177676662463,
-      "pr_auc": 0.999998106348055
+      "missed_accept_rate": 0.014855355746677092,
+      "roc_auc": 0.9992181391712276,
+      "pr_auc": 0.9999951142996362
     }
   },
   "calibration": {
-    "ECE": 0.07435468540533238
+    "ECE": 0.07385803882533004
   },
   "placement_residuals": {
-    "n_edges": 135,
+    "n_edges": 137,
     "mean_abs_x_px": 0.0,
-    "mean_abs_y_px": 0.1259259259259259,
+    "mean_abs_y_px": 0.0,
     "max_abs_x_px": 0.0,
-    "max_abs_y_px": 1.0
+    "max_abs_y_px": 0.0
   },
   "origin_grid_validation": {
     "n_tiles_compared": 78,
     "x_step_px": 160.0,
     "y_step_px": 63.0,
     "mean_abs_origin_dx_error_px": 0.0,
-    "mean_abs_origin_dy_error_px": 0.0,
+    "mean_abs_origin_dy_error_px": 1.6153846153846154,
     "max_abs_origin_dx_error_px": 0.0,
-    "max_abs_origin_dy_error_px": 0.0
+    "max_abs_origin_dy_error_px": 3.0
   },
   "parent_ang_ground_truth": {
-    "parent_ang": "EBSD stiching dev dataset\\5%coldrolled_30min_975C_65mag2.ang",
+    "parent_ang": "EBSD stiching dev dataset/5%coldrolled_30min_975C_65mag2.ang",
     "tiles_folder": "Cropped",
     "source": "direct tile coordinates compared against parent ANG grid spacing",
     "tolerance_px": 0,
@@ -109,8 +109,8 @@
       "n_selected": 137,
       "parent_ang_correct_selected": 137,
       "parent_ang_correct_selected_fraction": 1.0,
-      "accepted_parent_ang_correct": 135,
-      "rejected_parent_ang_correct": 2
+      "accepted_parent_ang_correct": 137,
+      "rejected_parent_ang_correct": 0
     }
   },
   "note": "Pseudo-label metrics are self-supervised seam diagnostics, not external ground truth. For older outputs without an accepted column, accepted is derived as final_score >= 0.65.",
@@ -127,10 +127,10 @@
     "mean_true_rank": 1.0,
     "median_true_rank": 1.0,
     "mean_reciprocal_rank": 1.0,
-    "mean_true_minus_best_false_margin": 0.06008947181333856,
-    "min_true_minus_best_false_margin": 0.02302018306963305,
-    "accepted_parent_correct": 135,
-    "rejected_parent_correct": 2,
+    "mean_true_minus_best_false_margin": 0.06003076708812224,
+    "min_true_minus_best_false_margin": 0.023020171875339224,
+    "accepted_parent_correct": 137,
+    "rejected_parent_correct": 0,
     "direction_summary": [
       {
         "direction": "horizontal",
@@ -139,7 +139,7 @@
         "mean_abs_y_error_px": 0.0,
         "mean_abs_x_error_px": 0.0,
         "max_linf_error_px": 0,
-        "accepted": 64,
+        "accepted": 65,
         "selected_accuracy": 1.0
       },
       {
@@ -149,7 +149,7 @@
         "mean_abs_y_error_px": 0.0,
         "mean_abs_x_error_px": 0.0,
         "max_linf_error_px": 0,
-        "accepted": 71,
+        "accepted": 72,
         "selected_accuracy": 1.0
       }
     ],

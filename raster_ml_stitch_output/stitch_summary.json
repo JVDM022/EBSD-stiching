@@ -1,11 +1,38 @@
 {
-  "tiles_folder": "C:\\Users\\zhihanjin\\Downloads\\EBSD-stiching\\Cropped",
-  "output_dir": "C:\\Users\\zhihanjin\\Downloads\\EBSD-stiching\\raster_ml_stitch_output",
+  "tiles_folder": "/Users/johnjin/Documents/work/Models/EBSD stiching/Cropped",
+  "output_dir": "/Users/johnjin/Documents/work/Models/EBSD stiching/raster_ml_stitch_output",
   "n_tiles": 78,
   "n_pairs": 137,
   "n_candidates": 1287,
-  "n_accepted_seams": 135,
+  "n_accepted_seams": 137,
   "ml_model": "logistic_regression_self_supervised",
+  "ipf_map": {
+    "file": "stitched_ipf_z.png",
+    "reference_direction": "sample Z",
+    "crystal_symmetry": "cubic",
+    "fundamental_triangle": "[001]-[101]-[111]"
+  },
+  "stitched_ang": {
+    "file": "stitched_map.ang",
+    "grid": "HexGrid",
+    "n_points": 739148,
+    "parent_comparison": {
+      "stitched_ang": "/Users/johnjin/Documents/work/Models/EBSD stiching/raster_ml_stitch_output/stitched_map.ang",
+      "parent_ang": "EBSD stiching dev dataset/5%coldrolled_30min_975C_65mag2.ang",
+      "stitched_points": 739148,
+      "parent_points": 739148,
+      "compared_points": 739148,
+      "indexed_overlap_points": 739147,
+      "phase_match_fraction": 1.0,
+      "mean_misorientation_deg": 1.8050649285197128e-07,
+      "p95_misorientation_deg": 1.2074182697257333e-06,
+      "max_misorientation_deg": 2.091309789151873e-06,
+      "orientation_match_fraction_0_1deg": 1.0,
+      "mean_abs_iq_error": 0.0,
+      "mean_abs_ci_error": 0.0,
+      "max_coordinate_error": 4.760000001624576e-05
+    }
+  },
   "feature_columns": [
     "iq_corr",
     "ci_corr",
@@ -19,26 +46,26 @@
     "mode": "self_supervised_logistic_regression",
     "pseudo_label_rule": "positive when valid_fraction>=0.60, IQ_corr>=0.45, and median_FCC_misorientation<=8deg",
     "n_candidates": 1287,
-    "pseudo_positives": 1258,
-    "pseudo_negatives": 29,
+    "pseudo_positives": 1279,
+    "pseudo_negatives": 8,
     "train_fraction_by_pair": 0.7,
     "n_train_pairs": 96,
     "n_validation_pairs": 41,
     "train": {
       "n": 906,
-      "positives": 889,
-      "negatives": 17,
+      "positives": 901,
+      "negatives": 5,
       "roc_auc": 1.0,
       "pr_auc": 1.0,
-      "mean_probability": 0.9679138076979866
+      "mean_probability": 0.9800174809067849
     },
     "validation": {
       "n": 381,
-      "positives": 369,
-      "negatives": 12,
-      "roc_auc": 0.9997741644083107,
-      "pr_auc": 0.9999926756024315,
-      "mean_probability": 0.9552875798719187
+      "positives": 378,
+      "negatives": 3,
+      "roc_auc": 0.9991181657848325,
+      "pr_auc": 0.999993019781938,
+      "mean_probability": 0.976318381661072
     }
   },
   "selected_shift_summary": {
@@ -47,16 +74,16 @@
     "median_misorientation_deg": 0.0,
     "p90_misorientation_deg": 0.0,
     "median_valid_fraction": 1.0,
-    "accepted_seam_fraction": 0.9854014598540146
+    "accepted_seam_fraction": 1.0
   },
   "ml_coefficients": {
-    "iq_corr": 3.4099169385182777,
-    "ci_corr": -0.7410768854333344,
-    "valid_fraction": -0.2092256368105751,
-    "median_misorientation_deg": -1.67139496657602,
-    "p90_misorientation_deg": -1.399033963773899,
-    "shift_abs": -0.09026994296895863,
-    "classical_score": 2.246664480324622
+    "iq_corr": 4.128938783364155,
+    "ci_corr": -0.5543776386695949,
+    "valid_fraction": -0.27857594639532585,
+    "median_misorientation_deg": -1.319262721687391,
+    "p90_misorientation_deg": -1.3595888197262964,
+    "shift_abs": -0.1846378921901497,
+    "classical_score": 2.1779832742905785
   },
-  "ml_intercept": 10.883062298866006
+  "ml_intercept": 13.475437409437088
 }

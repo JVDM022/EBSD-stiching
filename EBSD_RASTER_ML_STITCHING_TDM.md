@@ -805,9 +805,36 @@ After tile origins are solved, the notebook writes:
 ```text
 stitched_iq.png
 stitched_ci.png
+stitched_ipf_z.png
 stitched_ipf_preview.png
+stitched_map.ang
 stitched_mosaic_arrays.npz
 ```
+
+`stitched_ipf_z.png` is the cubic inverse-pole-figure map for the sample
+Z direction. Orientations are reduced to the cubic
+`[001]-[101]-[111]` fundamental triangle. The preview filename is retained
+as a compatibility alias.
+
+ANG unit detection uses indexed points only. Rows with a negative phase and
+the EDAX `4*pi` Euler sentinel are treated as invalid and cannot trigger an
+incorrect radians-to-degrees conversion.
+
+`stitched_map.ang` is written on the reconstructed native hex grid using the
+stitched Euler angles, IQ, CI, phase, SEM signal, and fit values. Its header
+contains the actual 903/902 alternating column counts and 819 rows.
+
+When a parent ANG is configured, the pipeline also writes:
+
+```text
+validation/parent_ang_pointwise_summary.json
+validation/parent_ang_point_mismatches.csv
+validation/parent_ang_misorientation.png
+validation/parent_vs_stitched_ipf.png
+```
+
+This comparison checks corresponding points for phase agreement, cubic
+misorientation, IQ/CI error, and coordinate error.
 
 The mosaic arrays include:
 
@@ -1209,7 +1236,9 @@ selected_pair_shifts.csv
 tile_origins.csv
 stitched_iq.png
 stitched_ci.png
+stitched_ipf_z.png
 stitched_ipf_preview.png
+stitched_map.ang
 stitch_summary.json
 ```
 
