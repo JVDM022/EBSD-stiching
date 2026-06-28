@@ -1,0 +1,15 @@
+{
+  "source_ang": "/Users/johnjin/Documents/work/Models/EBSD stiching/raster_ml_stitch_output/stitched_map.ang",
+  "grid_shape": [
+    819,
+    903
+  ],
+  "numeric_rows": 739148,
+  "indexed_points": 739147,
+  "reference_frame": "MTEX convertEuler2SpatialReferenceFrame setting 2",
+  "files": {
+    "orientation": "stitched_ang_python_orientations.png",
+    "iq": "stitched_ang_python_iq.png",
+    "ci": "stitched_ang_python_ci.png"
+  }
+}

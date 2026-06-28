@@ -16,6 +16,24 @@
     "file": "stitched_map.ang",
     "grid": "HexGrid",
     "n_points": 739148,
+    "rendered_from_ang": {
+      "source_ang": "/Users/johnjin/Documents/work/Models/EBSD stiching/raster_ml_stitch_output/stitched_map.ang",
+      "grid_shape": [
+        819,
+        903
+      ],
+      "numeric_rows": 739148,
+      "indexed_points": 739147,
+      "reference_frame": "MTEX convertEuler2SpatialReferenceFrame setting 2",
+      "files": {
+        "iq": "stitched_ang_iq.png",
+        "ci": "stitched_ang_ci.png",
+        "ipf_z": "stitched_ang_ipf_z.png",
+        "orientation_preview": "stitched_ang_orientation_preview.png"
+      }
+    },
+    "python_render_script": "render_stitched_ang_python.py",
+    "python_orientation_equivalent": "render cubic IPF-Z map from reloaded ANG Euler angles",
     "parent_comparison": {
       "stitched_ang": "/Users/johnjin/Documents/work/Models/EBSD stiching/raster_ml_stitch_output/stitched_map.ang",
       "parent_ang": "EBSD stiching dev dataset/5%coldrolled_30min_975C_65mag2.ang",

@@ -1,5 +1,5 @@
 {
-  "stitched_ang": "raster_ml_stitch_output/stitched_map.ang",
+  "stitched_ang": "/Users/johnjin/Documents/work/Models/EBSD stiching/raster_ml_stitch_output/stitched_map.ang",
   "parent_ang": "EBSD stiching dev dataset/5%coldrolled_30min_975C_65mag2.ang",
   "stitched_points": 739148,
   "parent_points": 739148,
