@@ -1,7 +1,0 @@
-pair_id,direction,residual_y_px,residual_x_px
-horizontal_r0_c1__r0_c2,horizontal,0.0,0.0
-vertical_r0_c1__r1_c1,vertical,0.0,0.0
-horizontal_r0_c2__r0_c3,horizontal,0.0,0.0
-horizontal_r0_c3__r0_c4,horizontal,0.0,0.0
-horizontal_r0_c4__r0_c5,horizontal,0.0,0.0
-horizontal_r1_c0__r1_c1,horizontal,0.0,0.0

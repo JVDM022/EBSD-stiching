@@ -1,9 +1,0 @@
-pair_id,direction,tile_a,tile_b,shift_y,shift_x,origin_dy,origin_dx,iq_corr,ci_corr,valid_fraction,median_misorientation_deg,p90_misorientation_deg,overlap_pixels,candidate_source,classical_score,pseudo_label,ml_probability,final_score,selected
-horizontal_r0_c0__r0_c1,horizontal,tile_r0_c0_clean.ang,tile_r0_c1_clean.ang,0,0,0,160,1.0000000000000002,1.0,1.0,52.724147446939085,55.226048337443395,3160,zero,0.6504806647312285,0,0.10755102055653143,0.2975763960176754,True
-vertical_r0_c0__r1_c0,vertical,tile_r0_c0_clean.ang,tile_r1_c0_clean.ang,1,0,64,0,0.9999999999999998,1.0,1.0,54.2483856508552,54.82630788628729,3000,zero,0.6353972795651172,0,0.08263512188494394,0.27610187707300454,True
-horizontal_r0_c1__r0_c2,horizontal,tile_r0_c1_clean.ang,tile_r0_c2_clean.ang,0,0,0,160,0.9999999999999999,1.0,1.0,0.0,0.0,3160,zero,0.9999999999999999,1,0.999377867248343,0.9995956137114228,True
-vertical_r0_c1__r1_c1,vertical,tile_r0_c1_clean.ang,tile_r1_c1_clean.ang,1,0,64,0,1.0000000000000002,1.0,1.0,0.0,0.0,3000,zero,0.985,1,0.999239007598982,0.9942553549393384,True
-horizontal_r0_c2__r0_c3,horizontal,tile_r0_c2_clean.ang,tile_r0_c3_clean.ang,0,0,0,160,1.0,1.0,1.0,0.0,1.2074182697257505e-07,3160,zero,1.0,1,0.9993778672447049,0.9995956137090581,True
-horizontal_r0_c3__r0_c4,horizontal,tile_r0_c3_clean.ang,tile_r0_c4_clean.ang,0,0,0,160,0.9999999999999999,0.9999999999999999,1.0,0.0,0.0,3160,zero,0.9999999999999999,1,0.999377867248343,0.9995956137114228,True
-horizontal_r0_c4__r0_c5,horizontal,tile_r0_c4_clean.ang,tile_r0_c5_clean.ang,0,0,0,160,1.0,0.9999999999999999,1.0,0.0,1.2074182697257505e-07,3160,zero,0.9999999999999999,1,0.9993778672447049,0.999595613709058,True
-horizontal_r1_c0__r1_c1,horizontal,tile_r1_c0_clean.ang,tile_r1_c1_clean.ang,0,0,0,160,1.0000000000000002,1.0000000000000002,1.0,0.0,1.2074182697257333e-06,3160,zero,1.0,1,0.9993778672119616,0.999595613687775,True
