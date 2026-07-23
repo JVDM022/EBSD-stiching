@@ -5,6 +5,7 @@ matplotlib
 scikit-image
 networkx
 scikit-learn
+tqdm
 
 # Optional EBSD packages:
 orix        # ANG orientation-map reader; also installed with kikuchipy
